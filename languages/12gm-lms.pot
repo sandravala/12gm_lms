@@ -1,0 +1,343 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 12GM Learning Management System\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-28 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: includes/class-12gm-lms.php:138
+msgid "Mark as Complete"
+msgstr ""
+
+#: includes/class-12gm-lms.php:139
+msgid "Completed"
+msgstr ""
+
+#: includes/class-12gm-lms.php:140
+msgid "Error occurred. Please try again."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:60
+msgid "LMS Dashboard"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:61
+msgid "LMS"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:73
+#: includes/class-12gm-lms-admin.php:74
+msgid "Dashboard"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:82
+msgid "All Courses"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:90
+msgid "Add New Course"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:98
+msgid "All Lessons"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:106
+msgid "Add New Lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:514
+#: includes/class-12gm-lms-admin.php:515
+msgid "Student Access"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:536
+msgid "Access granted successfully!"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:543
+msgid "Access revoked successfully!"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:652
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:657
+msgid "Security check failed."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:671
+msgid "Permalinks have been flushed successfully."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:157
+#: includes/class-12gm-lms-student.php:595
+msgid "My Courses"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:207
+#: includes/class-12gm-lms-student.php:603
+msgid "Please Log In"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:208
+msgid "You need to be logged in to view your courses."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:209
+msgid "Log In"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:225
+msgid "No Courses Found"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:226
+msgid "You are not enrolled in any courses yet."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:227
+msgid "Browse Courses"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:330
+#: includes/class-12gm-lms-student.php:353
+msgid "Course ID is required."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:337
+msgid "Course not found."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:383
+msgid "Access Denied"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:384
+msgid "You do not have access to this course."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:387
+msgid "You can purchase this course by clicking one of the links below:"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:398
+msgid "Please contact the site administrator for access."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:426
+msgid "Lesson ID is required."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:433
+msgid "Lesson not found."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:437
+msgid "You do not have access to this lesson."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:538
+msgid "Lesson marked as complete"
+msgstr ""
+
+#: templates/admin/dashboard.php:12
+msgid "Courses"
+msgstr ""
+
+#: templates/admin/dashboard.php:18
+msgid "Published Courses"
+msgstr ""
+
+#: templates/admin/dashboard.php:22
+msgid "Manage Courses"
+msgstr ""
+
+#: templates/admin/dashboard.php:23
+msgid "Add New"
+msgstr ""
+
+#: templates/admin/dashboard.php:29
+msgid "Lessons"
+msgstr ""
+
+#: templates/admin/dashboard.php:35
+msgid "Published Lessons"
+msgstr ""
+
+#: templates/admin/dashboard.php:39
+msgid "Manage Lessons"
+msgstr ""
+
+#: templates/admin/dashboard.php:46
+msgid "Students"
+msgstr ""
+
+#: templates/admin/dashboard.php:52
+msgid "Enrolled Students"
+msgstr ""
+
+#: templates/admin/dashboard.php:56
+msgid "Manage Student Access"
+msgstr ""
+
+#: templates/admin/dashboard.php:63
+msgid "WooCommerce"
+msgstr ""
+
+#: templates/admin/dashboard.php:66
+msgid "Link your courses to WooCommerce products to sell access to your courses."
+msgstr ""
+
+#: templates/admin/dashboard.php:69
+msgid "Manage Products"
+msgstr ""
+
+#: templates/admin/dashboard.php:75
+msgid "Quick Links"
+msgstr ""
+
+#: templates/admin/dashboard.php:83
+msgid "WooCommerce Products"
+msgstr ""
+
+#: templates/admin/dashboard.php:85
+msgid "View Student Dashboard"
+msgstr ""
+
+#: templates/admin/dashboard.php:91
+msgid "Tools"
+msgstr ""
+
+#: templates/admin/dashboard.php:92
+msgid "If you are experiencing 404 errors when trying to view courses or lessons, try flushing the permalinks."
+msgstr ""
+
+#: templates/admin/dashboard.php:94
+msgid "Flush Permalinks"
+msgstr ""
+
+#: templates/admin/dashboard.php:97
+msgid "WordPress Permalinks Settings"
+msgstr ""
+
+#: templates/admin/user-access.php:9
+msgid "Student Access Management"
+msgstr ""
+
+#: templates/admin/user-access.php:12
+msgid "Grant Course Access"
+msgstr ""
+
+#: templates/admin/user-access.php:20
+msgid "Student"
+msgstr ""
+
+#: templates/admin/user-access.php:23
+msgid "-- Select Student --"
+msgstr ""
+
+#: templates/admin/user-access.php:31
+msgid "Course"
+msgstr ""
+
+#: templates/admin/user-access.php:34
+msgid "-- Select Course --"
+msgstr ""
+
+#: templates/admin/user-access.php:44
+msgid "Grant Access"
+msgstr ""
+
+#: templates/admin/user-access.php:50
+msgid "Revoke Course Access"
+msgstr ""
+
+#: templates/admin/user-access.php:84
+msgid "Revoke Access"
+msgstr ""
+
+#: templates/admin/user-access.php:91
+msgid "Enrolled Students"
+msgstr ""
+
+#: templates/admin/user-access.php:125
+msgid "No students are currently enrolled in any courses."
+msgstr ""
+
+#: templates/admin/user-access.php:131
+msgid "Email"
+msgstr ""
+
+#: templates/admin/user-access.php:132
+msgid "Enrolled Courses"
+msgstr ""
+
+#: templates/admin/user-access.php:133
+msgid "Progress"
+msgstr ""
+
+#: templates/admin/user-access.php:134
+msgid "Actions"
+msgstr ""
+
+#: templates/public/course-content.php:36
+msgid "Lessons"
+msgstr ""
+
+#: templates/public/course-content.php:39
+msgid "No lessons found for this course."
+msgstr ""
+
+#: templates/public/course-content.php:73
+msgid "Review Lesson"
+msgstr ""
+
+#: templates/public/course-content.php:75
+msgid "Start Lesson"
+msgstr ""
+
+#: templates/public/course-content.php:87
+msgid "Back to Dashboard"
+msgstr ""
+
+#: templates/public/lesson-content.php:11
+msgid "Dashboard"
+msgstr ""
+
+#: templates/public/lesson-content.php:34
+msgid "Mark as Complete"
+msgstr ""
+
+#: templates/public/lesson-content.php:39
+msgid "Lesson completed"
+msgstr ""
+
+#: templates/public/lesson-content.php:44
+msgid "You have completed this lesson"
+msgstr ""
+
+#: templates/public/lesson-content.php:51
+msgid "Previous Lesson"
+msgstr ""
+
+#: templates/public/lesson-content.php:56
+msgid "Back to Course"
+msgstr ""
+
+#: templates/public/lesson-content.php:61
+msgid "Next Lesson"
+msgstr ""
+
+#: templates/public/lesson-content.php:113
+msgid "Error marking lesson as complete. Please try again."
+msgstr ""
