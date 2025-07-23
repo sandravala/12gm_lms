@@ -486,46 +486,66 @@ class TwelveGM_LMS_Student
         // Get all lessons in the course
         $course_lessons = $this->get_course_lessons($course_id);
 
-        // Find current position and adjacent lessons
-        $current_position = 0;
-        $prev_lesson      = null;
-        $next_lesson      = null;
+// Initialize navigation variables
+$current_position = 0;
+$prev_lesson = null;
+$next_lesson = null;
 
-        foreach ($course_lessons as $i => $course_lesson) {
-            if ($course_lesson->ID == $lesson_id) {
-                $current_position = $i;
+// Find current lesson index in the ordered lessons array
+foreach ($course_lessons as $i => $course_lesson) {
+    if ($course_lesson->ID == $lesson_id) {
+        $current_position = $i;
 
-                // Previous lesson
-                if ($i > 0) {
-                    $prev_lesson = $course_lessons[$i - 1];
-                }
-
-                // Next lesson
-                if ($i < count($course_lessons) - 1) {
-                    $next_lesson = $course_lessons[$i + 1];
-                }
-
-                break;
-            }
+        // Previous lesson (handles group transitions automatically)
+        if ($i > 0) {
+            $prev_lesson = $course_lessons[$i - 1];
         }
+
+        // Next lesson (handles group transitions automatically)
+        if ($i < count($course_lessons) - 1) {
+            $next_lesson = $course_lessons[$i + 1];
+        }
+
+        break;
+    }
+}
+
+// Add group transition information for template
+$is_moving_to_new_group = false;
+$next_group_name = '';
+
+if ($next_lesson) {
+    $current_lesson_groups = wp_get_post_terms($lesson_id, 'lesson_group');
+    $next_lesson_groups = wp_get_post_terms($next_lesson->ID, 'lesson_group');
+    
+    $current_group_id = !empty($current_lesson_groups) ? $current_lesson_groups[0]->term_id : 'ungrouped';
+    $next_group_id = !empty($next_lesson_groups) ? $next_lesson_groups[0]->term_id : 'ungrouped';
+    
+    if ($current_group_id !== $next_group_id) {
+        $is_moving_to_new_group = true;
+        $next_group_name = !empty($next_lesson_groups) ? $next_lesson_groups[0]->name : __('Other Lessons', '12gm-lms');
+    }
+}
 
         // Check if user has completed this lesson
         $user_id           = get_current_user_id();
         $completed_lessons = $this->get_completed_lessons($user_id, $course_id);
         $is_completed      = in_array($lesson_id, $completed_lessons);
 
-        return TwelveGM_LMS_Template_Loader::load_template('lesson-content.php', [
-            'lesson'            => $lesson,
-            'course'            => $course,
-            'course_id'         => $course_id,
-            'course_lessons'    => $course_lessons,
-            'current_position'  => $current_position,
-            'prev_lesson'       => $prev_lesson,
-            'next_lesson'       => $next_lesson,
-            'user_id'           => $user_id,
-            'completed_lessons' => $completed_lessons,
-            'is_completed'      => $is_completed,
-        ]);
+return TwelveGM_LMS_Template_Loader::load_template('lesson-content.php', [
+    'lesson'                 => $lesson,
+    'course'                 => $course,
+    'course_id'              => $course_id,
+    'course_lessons'         => $course_lessons,
+    'current_position'       => $current_position,
+    'prev_lesson'            => $prev_lesson,
+    'next_lesson'            => $next_lesson,
+    'user_id'                => $user_id,
+    'completed_lessons'      => $completed_lessons,
+    'is_completed'           => $is_completed,
+    'is_moving_to_new_group' => $is_moving_to_new_group,
+    'next_group_name'        => $next_group_name,
+]);
     }
 
     /**

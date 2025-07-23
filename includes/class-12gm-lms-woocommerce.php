@@ -143,7 +143,7 @@ class TwelveGM_LMS_WooCommerce {
         
         // Loop through order items
         foreach ($order->get_items() as $item) {
-            $product_id = $item->get_product_id();
+            $product_id = $item->get_id();
             $linked_courses = get_post_meta($product_id, '_12gm_lms_linked_courses', true);
             
             if (is_array($linked_courses) && !empty($linked_courses)) {

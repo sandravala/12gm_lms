@@ -28,7 +28,7 @@ require_once TWELVEGM_LMS_PLUGIN_DIR . 'includes/class-12gm-lms-woocommerce.php'
 require_once TWELVEGM_LMS_PLUGIN_DIR . 'includes/class-12gm-lms-admin.php';
 require_once TWELVEGM_LMS_PLUGIN_DIR . 'includes/class-12gm-lms-student.php';
 require_once TWELVEGM_LMS_PLUGIN_DIR . 'includes/class-12gm-lms-template-loader.php';
-
+require_once TWELVEGM_LMS_PLUGIN_DIR . 'includes/admin/lesson-meta.php';
 // Activation hook
 register_activation_hook(__FILE__, 'twelvegm_lms_activate');
 function twelvegm_lms_activate() {
@@ -39,6 +39,26 @@ function twelvegm_lms_activate() {
     // Flush rewrite rules after creating custom post types
     flush_rewrite_rules();
 }
+
+function register_lesson_groups_taxonomy() {
+    register_taxonomy('lesson_group', '12gm_lesson', array(
+        'labels' => array(
+            'name' => __('Lesson Groups', '12gm-lms'),
+            'singular_name' => __('Lesson Group', '12gm-lms'),
+            'menu_name' => __('Lesson Groups', '12gm-lms'),
+            'all_items' => __('All Groups', '12gm-lms'),
+            'add_new_item' => __('Add New Group', '12gm-lms'),
+            'edit_item' => __('Edit Group', '12gm-lms'),
+        ),
+        'hierarchical' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'lesson-group'),
+        'show_in_rest' => true,
+    ));
+}
+add_action('init', 'register_lesson_groups_taxonomy');
 
 // Deactivation hook
 register_deactivation_hook(__FILE__, 'twelvegm_lms_deactivate');

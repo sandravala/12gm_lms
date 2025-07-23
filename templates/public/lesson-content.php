@@ -5,7 +5,7 @@
  * @since      1.0.0
  */
 ?>
-<div class="sv-lms-lesson-container site-main entry-content">
+<div class="sv-lms-lesson-container">
     <div class="sv-lms-lesson-header">
         <div class="sv-lms-lesson-breadcrumbs breadcrumbs">
             <a href="<?php echo esc_url(get_permalink(get_option('12gm_lms_dashboard_page_id'))); ?>"><?php _e('Dashboard', 'sv-lms'); ?></a>
@@ -44,6 +44,26 @@
                 <span class="dashicons dashicons-yes-alt"></span> <?php _e('You have completed this lesson', 'sv-lms'); ?>
             </div>
         <?php endif; ?>
+    <div style="background: #f0f0f0; padding: 15px; margin: 20px 0; border: 1px solid #ccc; font-family: monospace; font-size: 12px;">
+        <strong>🐛 DEBUG INFO:</strong><br>
+        <strong>Current Lesson ID:</strong> <?php echo $lesson->ID; ?><br>
+        <strong>Current Position:</strong> <?php echo isset($current_position) ? $current_position : 'NOT SET'; ?><br>
+        <strong>Total Course Lessons:</strong> <?php echo isset($course_lessons) ? count($course_lessons) : 'NOT SET'; ?><br>
+        <strong>Is Completed:</strong> <?php echo $is_completed ? 'YES ✅' : 'NO ❌'; ?><br>
+        <strong>Has Previous Lesson:</strong> <?php echo $prev_lesson ? 'YES (ID: ' . $prev_lesson->ID . ' - ' . $prev_lesson->post_title . ')' : 'NO ❌'; ?><br>
+        <strong>Has Next Lesson:</strong> <?php echo $next_lesson ? 'YES (ID: ' . $next_lesson->ID . ' - ' . $next_lesson->post_title . ')' : 'NO ❌'; ?><br>
+        <strong>Moving to New Group:</strong> <?php echo isset($is_moving_to_new_group) && $is_moving_to_new_group ? 'YES' : 'NO'; ?><br>
+        <strong>Next Group Name:</strong> <?php echo isset($next_group_name) ? $next_group_name : 'N/A'; ?><br>
+        
+        <?php if (isset($course_lessons) && !empty($course_lessons)): ?>
+            <strong>All Course Lessons (in order):</strong><br>
+            <?php foreach ($course_lessons as $i => $cl): ?>
+                <?php $current_marker = ($cl->ID == $lesson->ID) ? ' 👈 CURRENT' : ''; ?>
+                <?php echo ($i + 1) . '. ID:' . $cl->ID . ' - ' . esc_html($cl->post_title) . ' (menu_order: ' . $cl->menu_order . ')' . $current_marker; ?><br>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+
         
         <div class="sv-lms-lesson-navigation">
             <?php if ($prev_lesson): ?>
@@ -57,12 +77,19 @@
                 <?php _e('Back to Course', 'sv-lms'); ?>
             </a>
             
-            <?php if ($next_lesson): ?>
-                <a href="<?php echo esc_url(get_permalink($next_lesson->ID)); ?>" class="button sv-lms-next-lesson-button <?php echo $is_completed ? '' : 'disabled'; ?>" <?php echo $is_completed ? '' : 'disabled'; ?>>
-                    <?php _e('Next Lesson', 'sv-lms'); ?>
-                    <span class="dashicons dashicons-arrow-right-alt"></span>
-                </a>
-            <?php endif; ?>
+<?php if ($next_lesson): ?>
+    <a href="<?php echo esc_url(get_permalink($next_lesson->ID)); ?>" 
+       class="button sv-lms-next-lesson-button <?php echo $is_completed ? '' : 'disabled'; ?>" 
+       <?php echo $is_completed ? '' : 'onclick="return false;"'; ?>>
+        <?php if (!empty($next_group_name)): ?>
+            <?php _e('Next Group:', 'sv-lms'); ?> <?php echo esc_html($next_group_name); ?>
+        <?php else: ?>
+            <?php _e('Next Lesson', 'sv-lms'); ?>
+        <?php endif; ?>
+        <span class="dashicons dashicons-arrow-right-alt"></span>
+    </a>
+<?php endif; ?>
+
         </div>
     </div>
 </div>
