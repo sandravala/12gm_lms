@@ -11,6 +11,11 @@
     <div class="course-header">
 
         <div class="course-info">
+        <div class="sv-lms-lesson-breadcrumbs breadcrumbs">
+            <a href="<?php echo esc_url(get_permalink(get_option('12gm_lms_dashboard_page_id'))); ?>"><?php _e('Dashboard', '12gm-lms'); ?></a>
+            &raquo;
+            <a href="<?php echo esc_url(get_permalink($course->ID)); ?>"><?php echo esc_html($course->post_title); ?></a>
+        </div>
 
             <h1><?php echo esc_html($course->post_title); ?></h1>
             <?php
@@ -96,67 +101,6 @@
                 <span class="progress-percentage"><?php printf(__('%d%% Complete', '12gm-lms'), $progress['percentage']); ?></span>
             </div>
         </div>
-
-        <!-- <div class="lessons-container">
-            <div class="lessons-list">
-                <h2><?php _e('Course Lessons', '12gm-lms'); ?></h2>
-
-                <?php if (empty($lessons)): ?>
-                    <p><?php _e('No lessons found for this course.', '12gm-lms'); ?></p>
-                <?php else: ?>
-                    <?php foreach ($lessons as $i => $lesson):
-                        $is_completed = in_array($lesson->ID, $completed_lessons);
-                        $is_current = (!$is_completed && $i === array_search(false, array_map(function ($l) use ($completed_lessons) {
-                            return in_array($l->ID, $completed_lessons);
-                        }, $lessons)));
-                    ?>
-                        <a href="<?php echo esc_url(get_permalink($lesson->ID)); ?>" class="lesson-card-link">
-                            <div class="lesson-card <?php echo $is_completed ? 'lesson-completed' : ''; ?>">
-                                <div class="lesson-icon">
-                                    <?php if ($is_completed): ?>
-                                        ✓
-                                    <?php else : ?>
-                                        ▷
-                                    <?php endif; ?>
-                                </div>
-                                <div class="lesson-info">
-                                    <div class="lesson-title"><?php echo ($i + 1) . '. ' . esc_html($lesson->post_title); ?></div>
-                                    <div class="lesson-meta">
-                                        <?php
-                                        $lesson_type = get_post_meta($lesson->ID, '_lesson_type', true) ?: 'video';
-                                        $lesson_minutes = get_post_meta($lesson->ID, '_lesson_duration', true) ?: '30';
-
-                                        // Format lesson duration
-                                        $lesson_duration = intval($lesson_minutes) . ' min';
-
-                                        $type_icons = [
-                                            'video' => '📹 ' . __('Video', '12gm-lms'),
-                                            'text' => '📄 ' . __('Text', '12gm-lms'),
-                                            'quiz' => '❓ ' . __('Quiz', '12gm-lms'),
-                                            'audio' => '🎵 ' . __('Audio', '12gm-lms')
-                                        ];
-                                        ?>
-                                        <div class="lesson-type"><?php echo esc_html($type_icons[$lesson_type] ?? '📹 Video'); ?></div>
-                                        <div class="lesson-duration"><?php echo esc_html($lesson_duration); ?></div>
-                                    </div>
-                                </div>
-                                <div class="lesson-status <?php
-                                                            echo $is_completed ? 'completed' : ($is_current ? 'in-progress' : 'upcoming');
-                                                            ?>">
-                                    <?php
-                                    if ($is_completed) {
-                                        echo __('Completed', '12gm-lms');
-                                    } else {
-                                        echo __('Upcoming', '12gm-lms');
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </a>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
-        </div> -->
 
         <div class="lessons-container">
             <div class="lessons-list">
