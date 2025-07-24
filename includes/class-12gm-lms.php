@@ -111,6 +111,15 @@ class TwelveGM_LMS {
      */
     public function enqueue_admin_scripts() {
         wp_enqueue_script('12gm-lms-admin', TWELVEGM_LMS_PLUGIN_URL . 'assets/js/admin.js', array('jquery'), TWELVEGM_LMS_VERSION, false);
+        
+        // Add localized strings for admin JavaScript
+        wp_localize_script('12gm-lms-admin', 'twelvegm_lms_admin', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('12gm_lms_ajax_nonce'),
+            'i18n' => array(
+                'select_course' => __('-- Select a Course --', '12gm-lms'),
+            )
+        ));
     }
 
     /**
@@ -138,6 +147,10 @@ class TwelveGM_LMS {
                 'mark_complete' => __('Mark as Complete', '12gm-lms'),
                 'completed' => __('Completed', '12gm-lms'),
                 'error' => __('Error occurred. Please try again.', '12gm-lms'),
+                'error_marking_complete' => __('Error marking lesson as complete', '12gm-lms'),
+                'error_try_again' => __('Error marking lesson as complete. Please try again.', '12gm-lms'),
+                'progress_complete' => __('% Complete', '12gm-lms'),
+                'lessons_text' => __('lessons', '12gm-lms'),
             )
         ));
     }

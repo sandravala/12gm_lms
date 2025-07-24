@@ -5,7 +5,7 @@
  * @since      1.0.0
  */
 ?>
-<div class="sv-lms-dashboard site-main entry-content">
+<div class="sv-lms-dashboard">
     <h2 class="sv-lms-title entry-title"><?php echo esc_html($atts['title']); ?></h2>
     
     <div class="sv-lms-courses-grid courses-grid">
@@ -35,7 +35,7 @@
                             <div class="sv-lms-progress-fill" style="width: <?php echo esc_attr($course['progress']['percentage']); ?>%;"></div>
                         </div>
                         <div class="sv-lms-progress-text">
-                            <?php echo sprintf(__('%d%% Complete (%d/%d lessons)', 'sv-lms'), 
+                            <?php echo sprintf(__('%d%% Complete (%d/%d lessons)', '12gm-lms'), 
                                 $course['progress']['percentage'], 
                                 $course['progress']['completed'], 
                                 $course['progress']['total']); ?>
@@ -44,7 +44,7 @@
                     
                     <div class="sv-lms-course-actions">
                         <a href="<?php echo esc_url($course['link']); ?>" class="button sv-lms-course-button">
-                            <?php _e('Continue Learning', 'sv-lms'); ?>
+                            <?php _e('Continue Learning', '12gm-lms'); ?>
                         </a>
                     </div>
                 </div>

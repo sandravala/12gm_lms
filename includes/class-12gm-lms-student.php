@@ -65,11 +65,21 @@ class TwelveGM_LMS_Student
      */
     public function add_rewrite_rules()
     {
-        add_rewrite_rule(
-            '^courses/([^/]+)/lesson/([^/]+)/?$',
-            'index.php?12gm_course=$matches[1]&12gm_lesson=$matches[2]',
-            'top'
-        );
+        // Get all published courses and create specific rules for each
+        $courses = get_posts(array(
+            'post_type' => '12gm_course',
+            'post_status' => 'publish',
+            'numberposts' => -1,
+        ));
+
+        foreach ($courses as $course) {
+            // Add a specific rewrite rule for each course slug
+            add_rewrite_rule(
+                '^' . preg_quote($course->post_name, '/') . '/([^/]+)/?$',
+                'index.php?12gm_course=' . $course->post_name . '&12gm_lesson=$matches[1]',
+                'top'
+            );
+        }
 
         add_rewrite_tag('%12gm_course%', '([^&]+)');
         add_rewrite_tag('%12gm_lesson%', '([^&]+)');

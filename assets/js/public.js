@@ -51,20 +51,20 @@
                             
                             // Update progress text
                             $('.12gm-lms-progress-text').text(
-                                progress.percentage + '% Complete (' + 
+                                progress.percentage + twelvegm_lms_ajax.i18n.progress_complete + ' (' + 
                                 progress.completed + '/' + 
-                                progress.total + ' lessons)'
+                                progress.total + ' ' + twelvegm_lms_ajax.i18n.lessons_text + ')'
                             );
                         }
                     } else {
                         // Show error message and re-enable button
-                        alert(response.data || 'Error marking lesson as complete');
+                        alert(response.data || twelvegm_lms_ajax.i18n.error_marking_complete);
                         button.prop('disabled', false);
                     }
                 },
                 error: function() {
                     spinner.hide();
-                    alert('Error marking lesson as complete. Please try again.');
+                    alert(twelvegm_lms_ajax.i18n.error_try_again);
                     button.prop('disabled', false);
                 }
             });

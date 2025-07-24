@@ -1,21 +1,24 @@
 <?php
+
 /**
  * Register all custom post types for the plugin.
  *
  * @since      1.0.0
  */
-class TwelveGM_LMS_Post_Types {
+class TwelveGM_LMS_Post_Types
+{
 
     /**
      * Register the custom post types.
      *
      * @since    1.0.0
      */
-    public function run() {
+    public function run()
+    {
         add_action('init', array($this, 'register_course_post_type'));
         add_action('init', array($this, 'register_lesson_post_type'));
         add_action('init', array($this, 'register_progress_post_type'));
-        
+
         // Make sure to flush rewrite rules when needed
         add_action('init', array($this, 'maybe_flush_rewrite_rules'));
     }
@@ -25,7 +28,8 @@ class TwelveGM_LMS_Post_Types {
      *
      * @since    1.0.0
      */
-    public function register_course_post_type() {
+    public function register_course_post_type()
+    {
         $labels = array(
             'name'                  => _x('Courses', 'Post Type General Name', '12gm-lms'),
             'singular_name'         => _x('Course', 'Post Type Singular Name', '12gm-lms'),
@@ -55,7 +59,7 @@ class TwelveGM_LMS_Post_Types {
             'items_list_navigation' => __('Courses list navigation', '12gm-lms'),
             'filter_items_list'     => __('Filter courses list', '12gm-lms'),
         );
-        
+
         $args = array(
             'label'                 => __('Course', '12gm-lms'),
             'description'           => __('Course Description', '12gm-lms'),
@@ -76,8 +80,12 @@ class TwelveGM_LMS_Post_Types {
             'capability_type'       => 'post',
             'show_in_rest'          => true, // Enable Gutenberg editor
             'rest_base'             => '12gm-courses',
+            'rewrite'               => array(
+                'slug'       => 'turiu-laiko',
+                'with_front' => false
+            ),
         );
-        
+
         register_post_type('12gm_course', $args);
     }
 
@@ -86,7 +94,8 @@ class TwelveGM_LMS_Post_Types {
      *
      * @since    1.0.0
      */
-    public function register_lesson_post_type() {
+    public function register_lesson_post_type()
+    {
         $labels = array(
             'name'                  => _x('Lessons', 'Post Type General Name', '12gm-lms'),
             'singular_name'         => _x('Lesson', 'Post Type Singular Name', '12gm-lms'),
@@ -116,7 +125,7 @@ class TwelveGM_LMS_Post_Types {
             'items_list_navigation' => __('Lessons list navigation', '12gm-lms'),
             'filter_items_list'     => __('Filter lessons list', '12gm-lms'),
         );
-        
+
         $args = array(
             'label'                 => __('Lesson', '12gm-lms'),
             'description'           => __('Lesson Description', '12gm-lms'),
@@ -137,9 +146,14 @@ class TwelveGM_LMS_Post_Types {
             'capability_type'       => 'post',
             'show_in_rest'          => true, // Enable Gutenberg editor
             'rest_base'             => '12gm-lessons',
+            'rewrite'               => false, // We'll use the existing courses/lesson pattern
         );
-        
+
         register_post_type('12gm_lesson', $args);
+
+        add_filter('post_type_link', array($this, 'lesson_permalink'), 10, 2);
+
+
 
         // Add course-lesson relationship through taxonomy
         $taxonomy_labels = array(
@@ -170,12 +184,44 @@ class TwelveGM_LMS_Post_Types {
         register_taxonomy('12gm_course_cat', array('12gm_lesson'), $taxonomy_args);
     }
 
+
+
+
+    /**
+     * Replace %12gm_course_name% with the actual course slug in lesson permalinks.
+     */
+    public function lesson_permalink($permalink, $post)
+    {
+        if ($post->post_type !== '12gm_lesson') {
+            return $permalink;
+        }
+
+
+        // Get the course post ID from post meta
+        $course_id = get_post_meta($post->ID, '_12gm_course_id', true);
+        if ($course_id) {
+            $course = get_post($course_id);
+            if ($course && $course->post_status === 'publish') {
+                $course_slug = $course->post_name; // This is the course post slug
+            } else {
+                $course_slug = 'kursas';
+            }
+        } else {
+            $course_slug = 'kursas';
+        }
+
+        return home_url('/' . $course_slug . '/' . $post->post_name . '/');
+    }
+
+
+
     /**
      * Register the Progress post type (used to track student progress).
      *
      * @since    1.0.0
      */
-    public function register_progress_post_type() {
+    public function register_progress_post_type()
+    {
         $labels = array(
             'name'                  => _x('Student Progress', 'Post Type General Name', '12gm-lms'),
             'singular_name'         => _x('Progress', 'Post Type Singular Name', '12gm-lms'),
@@ -196,7 +242,7 @@ class TwelveGM_LMS_Post_Types {
             'not_found'             => __('Not found', '12gm-lms'),
             'not_found_in_trash'    => __('Not found in Trash', '12gm-lms'),
         );
-        
+
         $args = array(
             'label'                 => __('Progress', '12gm-lms'),
             'description'           => __('Student Progress Tracking', '12gm-lms'),
@@ -217,16 +263,17 @@ class TwelveGM_LMS_Post_Types {
             'capability_type'       => 'post',
             'show_in_rest'          => false,
         );
-        
+
         register_post_type('12gm_progress', $args);
     }
-    
+
     /**
      * Check if we need to flush rewrite rules.
      * 
      * @since    1.0.0
      */
-    public function maybe_flush_rewrite_rules() {
+    public function maybe_flush_rewrite_rules()
+    {
         // If our rewrite rules haven't been flushed yet, do it now
         if (get_option('12gm_lms_flush_rewrite_rules', false)) {
             flush_rewrite_rules();

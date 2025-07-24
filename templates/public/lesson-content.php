@@ -8,7 +8,7 @@
 <div class="sv-lms-lesson-container">
     <div class="sv-lms-lesson-header">
         <div class="sv-lms-lesson-breadcrumbs breadcrumbs">
-            <a href="<?php echo esc_url(get_permalink(get_option('12gm_lms_dashboard_page_id'))); ?>"><?php _e('Dashboard', 'sv-lms'); ?></a>
+            <a href="<?php echo esc_url(get_permalink(get_option('12gm_lms_dashboard_page_id'))); ?>"><?php _e('Dashboard', '12gm-lms'); ?></a>
             &raquo;
             <a href="<?php echo esc_url(get_permalink($course->ID)); ?>"><?php echo esc_html($course->post_title); ?></a>
             &raquo;
@@ -32,16 +32,16 @@
         <?php if (!$is_completed): ?>
             <div class="sv-lms-lesson-complete-form">
                 <button id="sv-lms-mark-complete-btn" class="button button-primary" data-lesson-id="<?php echo esc_attr($lesson->ID); ?>" data-nonce="<?php echo esc_attr(wp_create_nonce('12gm_lms_lesson_complete')); ?>">
-                    <?php _e('Mark as Complete', 'sv-lms'); ?>
+                    <?php _e('Mark as Complete', '12gm-lms'); ?>
                 </button>
                 <span class="sv-lms-spinner" style="display: none;"></span>
                 <span class="sv-lms-complete-success" style="display: none; color: green;">
-                    <span class="dashicons dashicons-yes-alt"></span> <?php _e('Lesson completed', 'sv-lms'); ?>
+                    <span class="dashicons dashicons-yes-alt"></span> <?php _e('Lesson completed', '12gm-lms'); ?>
                 </span>
             </div>
         <?php else: ?>
             <div class="sv-lms-lesson-completed-message">
-                <span class="dashicons dashicons-yes-alt"></span> <?php _e('You have completed this lesson', 'sv-lms'); ?>
+                <span class="dashicons dashicons-yes-alt"></span> <?php _e('You have completed this lesson', '12gm-lms'); ?>
             </div>
         <?php endif; ?>
     <div style="background: #f0f0f0; padding: 15px; margin: 20px 0; border: 1px solid #ccc; font-family: monospace; font-size: 12px;">
@@ -69,12 +69,12 @@
             <?php if ($prev_lesson): ?>
                 <a href="<?php echo esc_url(get_permalink($prev_lesson->ID)); ?>" class="button sv-lms-prev-lesson-button">
                     <span class="dashicons dashicons-arrow-left-alt"></span>
-                    <?php _e('Previous Lesson', 'sv-lms'); ?>
+                    <?php _e('Previous Lesson', '12gm-lms'); ?>
                 </a>
             <?php endif; ?>
             
             <a href="<?php echo esc_url(get_permalink($course->ID)); ?>" class="button sv-lms-course-button">
-                <?php _e('Back to Course', 'sv-lms'); ?>
+                <?php _e('Back to Course', '12gm-lms'); ?>
             </a>
             
 <?php if ($next_lesson): ?>
@@ -82,9 +82,9 @@
        class="button sv-lms-next-lesson-button <?php echo $is_completed ? '' : 'disabled'; ?>" 
        <?php echo $is_completed ? '' : 'onclick="return false;"'; ?>>
         <?php if (!empty($next_group_name)): ?>
-            <?php _e('Next Group:', 'sv-lms'); ?> <?php echo esc_html($next_group_name); ?>
+            <?php _e('Next Group:', '12gm-lms'); ?> <?php echo esc_html($next_group_name); ?>
         <?php else: ?>
-            <?php _e('Next Lesson', 'sv-lms'); ?>
+            <?php _e('Next Lesson', '12gm-lms'); ?>
         <?php endif; ?>
         <span class="dashicons dashicons-arrow-right-alt"></span>
     </a>
@@ -137,7 +137,7 @@ jQuery(document).ready(function($) {
             },
             error: function() {
                 spinner.hide();
-                alert(twelvegm_lms_ajax.i18n.error || '<?php _e('Error marking lesson as complete. Please try again.', 'sv-lms'); ?>');
+                alert(twelvegm_lms_ajax.i18n.error || '<?php _e('Error marking lesson as complete. Please try again.', '12gm-lms'); ?>');
                 button.prop('disabled', false);
             }
         });

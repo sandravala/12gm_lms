@@ -65,7 +65,8 @@ class TwelveGM_LMS_Activator {
     private static function create_pages() {
         // Create student dashboard page
         $dashboard_page_id = wp_insert_post(array(
-            'post_title'     => __('My Learning Dashboard', '12gm-lms'),
+            'post_title'     => __('Mano kursai', '12gm-lms'),
+            'post_name'      => 'mano-kursai', // Force specific slug
             'post_content'   => '[12gm_lms_dashboard]',
             'post_status'    => 'publish',
             'post_type'      => 'page',

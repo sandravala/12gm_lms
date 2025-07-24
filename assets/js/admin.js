@@ -31,12 +31,12 @@
                     data: {
                         action: '12gm_lms_get_user_courses',
                         user_id: userId,
-                        nonce: window.twelvegm_lms_ajax.nonce
+                        nonce: window.twelvegm_lms_admin.nonce
                     },
                     success: function(response) {
                         // Reset and enable course dropdown
                         $('#course_id_revoke').prop('disabled', false);
-                        $('#course_id_revoke').html('<option value="">' + window.twelvegm_lms_ajax.select_course + '</option>');
+                        $('#course_id_revoke').html('<option value="">' + window.twelvegm_lms_admin.i18n.select_course + '</option>');
                         
                         if (response.success && response.data.courses) {
                             // Add courses to dropdown

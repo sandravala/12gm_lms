@@ -6,7 +6,7 @@
  * @since      1.0.0
  */
 ?>
-<div class="sv-lms-course-container site-main entry-content">
+<div class="sv-lms-course-container">
 
     <div class="course-header">
 
@@ -28,11 +28,11 @@
             $remaining_minutes = $total_minutes % 60;
 
             if ($total_hours > 0 && $remaining_minutes > 0) {
-                $formatted_duration = $total_hours . 'h ' . $remaining_minutes . 'min';
+                $formatted_duration = $total_hours . __('h ', '12gm-lms') . $remaining_minutes . __('min', '12gm-lms');
             } elseif ($total_hours > 0) {
-                $formatted_duration = $total_hours . ' ' . ($total_hours == 1 ? 'Hour' : 'Hours');
+                $formatted_duration = $total_hours . ' ' . ($total_hours == 1 ? __('Hour', '12gm-lms') : __('Hours', '12gm-lms'));
             } else {
-                $formatted_duration = $remaining_minutes . ' Minutes';
+                $formatted_duration = $remaining_minutes . ' ' . __('Minutes', '12gm-lms');
             }
 
 
@@ -58,9 +58,11 @@
             $course_students = max($actual_enrolled, $minimum_display);
             ?>
             <div class="course-meta">
-                <div class="course-lessons">📚 <?php echo esc_attr($progress['total']); ?> Lessons</div>
-                <div class="course-duration">⏱️ <?php echo esc_html($formatted_duration); ?> Total</div>
-                <div class="course-students">👥 <?php echo esc_html($course_students); ?> Students</div>
+                <div class="course-lessons">📚 <?php printf(__('%d Lessons', '12gm-lms'), $progress['total']); ?></div>
+                <div class="course-duration">⏱️ <?php printf(__('%s Total', '12gm-lms'), esc_html($formatted_duration)); ?></div>
+                <?php if ($course_students > 10): ?>
+                    <div class="course-students">👥 <?php printf(__('%d Students', '12gm-lms'), $course_students); ?></div>
+                <?php endif; ?>
             </div>
 
             <p class="course-description"><?php echo wp_kses_post($course->post_excerpt); ?></p>
@@ -70,11 +72,11 @@
             <div class="progress-stats">
                 <div class="stat-item">
                     <div class="stat-value"><?php echo esc_attr($progress['completed']); ?></div>
-                    <div class="stat-label">Lessons Completed</div>
+                    <div class="stat-label"><?php _e('Lessons Completed', '12gm-lms'); ?></div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-value"><?php echo esc_attr($progress['total'] - $progress['completed']); ?></div>
-                    <div class="stat-label">Lessons Remaining</div>
+                    <div class="stat-label"><?php _e('Lessons Remaining', '12gm-lms'); ?></div>
                 </div>
                 <!-- <div class="stat-item">
                     <div class="stat-value">4.5</div>
@@ -82,7 +84,7 @@
                 </div> -->
                 <div class="stat-item">
                     <div class="stat-value"><?php echo esc_attr($progress['percentage']); ?>%</div>
-                    <div class="stat-label">Course Completion</div>
+                    <div class="stat-label"><?php _e('Course Completion', '12gm-lms'); ?></div>
                 </div>
             </div>
 
@@ -90,14 +92,14 @@
                 <div class="progress-fill" style="width:<?php echo esc_attr($progress['percentage']); ?>%"></div>
             </div>
             <div class="progress-text">
-                <span>Your Progress</span>
-                <span class="progress-percentage"><?php echo esc_attr($progress['percentage']); ?>% Complete</span>
+                <span><?php _e('Your Progress', '12gm-lms'); ?></span>
+                <span class="progress-percentage"><?php printf(__('%d%% Complete', '12gm-lms'), $progress['percentage']); ?></span>
             </div>
         </div>
 
         <!-- <div class="lessons-container">
             <div class="lessons-list">
-                <h2>Course Lessons</h2>
+                <h2><?php _e('Course Lessons', '12gm-lms'); ?></h2>
 
                 <?php if (empty($lessons)): ?>
                     <p><?php _e('No lessons found for this course.', '12gm-lms'); ?></p>
@@ -143,9 +145,9 @@
                                                             ?>">
                                     <?php
                                     if ($is_completed) {
-                                        echo 'Completed';
+                                        echo __('Completed', '12gm-lms');
                                     } else {
-                                        echo 'Upcoming';
+                                        echo __('Upcoming', '12gm-lms');
                                     }
                                     ?>
                                 </div>
@@ -158,7 +160,7 @@
 
         <div class="lessons-container">
             <div class="lessons-list">
-                <h2>Course Lessons</h2>
+                <h2><?php _e('Course Lessons', '12gm-lms'); ?></h2>
 
                 <?php if (empty($lessons)): ?>
                     <p><?php _e('No lessons found for this course.', '12gm-lms'); ?></p>
@@ -219,7 +221,7 @@
                             <?php if ($has_groups || $group_key !== 'ungrouped'): ?>
                                 <h3 class="lesson-group-title">
                                     <?php echo esc_html($group_data['name']); ?>
-                                    <span class="lesson-count">(<?php echo count($group_data['lessons']); ?> lessons)</span>
+                                    <span class="lesson-count"><?php printf(__('(%d lessons)', '12gm-lms'), count($group_data['lessons'])); ?></span>
                                 </h3>
 
                                 <?php if (!empty($group_data['description'])): ?>
@@ -268,9 +270,9 @@
                                             <div class="lesson-status <?php echo $is_completed ? 'completed' : ($is_current ? 'in-progress' : 'upcoming'); ?>">
                                                 <?php
                                                 if ($is_completed) {
-                                                    echo 'Completed';
+                                                    echo __('Completed', '12gm-lms');
                                                 } else {
-                                                    echo 'Upcoming';
+                                                    echo __('Upcoming', '12gm-lms');
                                                 }
                                                 ?>
                                             </div>

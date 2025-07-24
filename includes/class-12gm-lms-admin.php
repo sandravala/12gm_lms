@@ -54,6 +54,23 @@ class TwelveGM_LMS_Admin
 
         // Add flush permalinks option to main LMS settings
         add_action('admin_init', array($this, 'handle_flush_rewrite_rules'));
+
+        add_action('set_object_terms', function ($object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids) {
+            if ($taxonomy === '12gm_course_cat' && !empty($terms)) {
+                // $terms can be an array of term IDs or slugs
+                $term = is_array($terms) ? $terms[0] : $terms;
+                if (is_numeric($term)) {
+                    $term_obj = get_term($term, '12gm_course_cat');
+                    $term_slug = $term_obj ? $term_obj->slug : '';
+                } else {
+                    $term_slug = $term;
+                }
+                if (strpos($term_slug, 'course-') === 0) {
+                    $course_id = intval(str_replace('course-', '', $term_slug));
+                    update_post_meta($object_id, '_12gm_course_id', $course_id);
+                }
+            }
+        }, 10, 6);
     }
 
     /**
@@ -131,8 +148,10 @@ class TwelveGM_LMS_Admin
         // Student stats
         $students_with_access = $this->get_students_with_course_access();
 
+
         include TWELVEGM_LMS_PLUGIN_DIR . 'templates/admin/dashboard.php';
     }
+
 
     /**
      * Add metaboxes to the course edit screen.
@@ -422,26 +441,26 @@ class TwelveGM_LMS_Admin
             );
         }
 
-// Update lesson group orders
-if (isset($_POST['12gm_lms_lesson_group_order']) && is_array($_POST['12gm_lms_lesson_group_order'])) {
-    foreach ($_POST['12gm_lms_lesson_group_order'] as $lesson_id => $group_order) {
-        // Get the lesson's group
-        $lesson_groups = wp_get_post_terms($lesson_id, 'lesson_group');
-        $group_id = !empty($lesson_groups) ? $lesson_groups[0]->term_id : 'ungrouped';
-        
-        // Store group order as meta
-        update_post_meta($lesson_id, '_lesson_group_order', intval($group_order));
-        
-        // Calculate global menu_order based on group and group order
-        // This ensures proper ordering in queries
-        $global_order = $this->calculate_global_lesson_order($lesson_id, $group_id, intval($group_order));
-        
-        wp_update_post(array(
-            'ID' => $lesson_id,
-            'menu_order' => $global_order,
-        ));
-    }
-}
+        // Update lesson group orders
+        if (isset($_POST['12gm_lms_lesson_group_order']) && is_array($_POST['12gm_lms_lesson_group_order'])) {
+            foreach ($_POST['12gm_lms_lesson_group_order'] as $lesson_id => $group_order) {
+                // Get the lesson's group
+                $lesson_groups = wp_get_post_terms($lesson_id, 'lesson_group');
+                $group_id = !empty($lesson_groups) ? $lesson_groups[0]->term_id : 'ungrouped';
+
+                // Store group order as meta
+                update_post_meta($lesson_id, '_lesson_group_order', intval($group_order));
+
+                // Calculate global menu_order based on group and group order
+                // This ensures proper ordering in queries
+                $global_order = $this->calculate_global_lesson_order($lesson_id, $group_id, intval($group_order));
+
+                wp_update_post(array(
+                    'ID' => $lesson_id,
+                    'menu_order' => $global_order,
+                ));
+            }
+        }
 
         // Update lesson groups
         if (isset($_POST['12gm_lms_lesson_groups']) && is_array($_POST['12gm_lms_lesson_groups'])) {
@@ -473,42 +492,42 @@ if (isset($_POST['12gm_lms_lesson_group_order']) && is_array($_POST['12gm_lms_le
     }
 
     /**
- * Calculate global lesson order based on group and group order.
- *
- * @param int $lesson_id Lesson ID
- * @param mixed $group_id Group ID or 'ungrouped'
- * @param int $group_order Order within the group
- * @return int Global menu order
- */
+     * Calculate global lesson order based on group and group order.
+     *
+     * @param int $lesson_id Lesson ID
+     * @param mixed $group_id Group ID or 'ungrouped'
+     * @param int $group_order Order within the group
+     * @return int Global menu order
+     */
     private function calculate_global_lesson_order($lesson_id, $group_id, $group_order)
-{
-    // Get all lesson groups and sort them
-    $lesson_groups = get_terms(array(
-        'taxonomy' => 'lesson_group',
-        'hide_empty' => false,
-        'orderby' => 'name',
-        'order' => 'ASC'
-    ));
-    
-    $group_index = 0;
-    $lessons_per_group = 1000; // Spacing between groups
-    
-    if ($group_id === 'ungrouped') {
-        // Ungrouped lessons come last
-        $group_index = count($lesson_groups);
-    } else {
-        // Find group index
-        foreach ($lesson_groups as $index => $group) {
-            if ($group->term_id == $group_id) {
-                $group_index = $index;
-                break;
+    {
+        // Get all lesson groups and sort them
+        $lesson_groups = get_terms(array(
+            'taxonomy' => 'lesson_group',
+            'hide_empty' => false,
+            'orderby' => 'name',
+            'order' => 'ASC'
+        ));
+
+        $group_index = 0;
+        $lessons_per_group = 1000; // Spacing between groups
+
+        if ($group_id === 'ungrouped') {
+            // Ungrouped lessons come last
+            $group_index = count($lesson_groups);
+        } else {
+            // Find group index
+            foreach ($lesson_groups as $index => $group) {
+                if ($group->term_id == $group_id) {
+                    $group_index = $index;
+                    break;
+                }
             }
         }
+
+        // Calculate global order: (group_index * 1000) + group_order
+        return ($group_index * $lessons_per_group) + $group_order;
     }
-    
-    // Calculate global order: (group_index * 1000) + group_order
-    return ($group_index * $lessons_per_group) + $group_order;
-}
 
     /**
      * Add lesson-course assignment metabox.
@@ -610,6 +629,8 @@ if (isset($_POST['12gm_lms_lesson_group_order']) && is_array($_POST['12gm_lms_le
                 if (empty($course_term)) {
                     wp_set_object_terms($post_id, array(), '12gm_course_cat');
                     // Don't update menu_order when removing from course
+                    // Remove course ID meta as well
+                    delete_post_meta($post_id, '_12gm_course_id');
                 } else {
                     wp_set_object_terms($post_id, $course_term, '12gm_course_cat');
 
@@ -647,6 +668,11 @@ if (isset($_POST['12gm_lms_lesson_group_order']) && is_array($_POST['12gm_lms_le
                             'ID' => $post_id,
                             'menu_order' => $current_menu_order,
                         ));
+                    }
+                    // Store parent course post ID as meta for pretty permalinks
+                    if (strpos($course_term, 'course-') === 0) {
+                        $course_id = intval(str_replace('course-', '', $course_term));
+                        update_post_meta($post_id, '_12gm_course_id', $course_id);
                     }
                 }
             } else {
