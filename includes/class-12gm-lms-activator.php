@@ -64,14 +64,20 @@ class TwelveGM_LMS_Activator {
      */
     private static function create_pages() {
         // Create student dashboard page
-        $dashboard_page_id = wp_insert_post(array(
+        // Check if the page already exists by slug
+        $existing_page = get_page_by_path('mano-kursai', OBJECT, 'page');
+        if ($existing_page) {
+            $dashboard_page_id = $existing_page->ID;
+        } else {
+            $dashboard_page_id = wp_insert_post(array(
             'post_title'     => __('Mano kursai', '12gm-lms'),
             'post_name'      => 'mano-kursai', // Force specific slug
             'post_content'   => '[12gm_lms_dashboard]',
             'post_status'    => 'publish',
             'post_type'      => 'page',
             'comment_status' => 'closed',
-        ));
+            ));
+        }
         
         // Save page ID to options
         update_option('12gm_lms_dashboard_page_id', $dashboard_page_id);
