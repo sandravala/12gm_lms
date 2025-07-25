@@ -1,0 +1,575 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-24 18:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: includes/class-12gm-lms.php:138
+msgid "Mark as Complete"
+msgstr ""
+
+#: includes/class-12gm-lms.php:139
+msgid "Completed"
+msgstr ""
+
+#: includes/class-12gm-lms.php:140
+msgid "Error occurred. Please try again."
+msgstr ""
+
+#: includes/class-12gm-lms.php:144
+msgid "-- Select a Course --"
+msgstr ""
+
+#: includes/class-12gm-lms.php:147
+msgid "Error marking lesson as complete"
+msgstr ""
+
+#: includes/class-12gm-lms.php:148
+msgid "Error marking lesson as complete. Please try again."
+msgstr ""
+
+#: includes/class-12gm-lms.php:149
+msgid "% Complete"
+msgstr ""
+
+#: includes/class-12gm-lms.php:150
+msgid "lessons"
+msgstr ""
+
+#: includes/class-12gm-lms-activator.php:68
+msgid "Mano kursai"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:85
+msgid "LMS Dashboard"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:86
+msgid "LMS"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:97 includes/class-12gm-lms-admin.php:98
+msgid "Dashboard"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:106 includes/class-12gm-lms-admin.php:107
+msgid "All Courses"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:114 includes/class-12gm-lms-admin.php:115
+msgid "Add New Course"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:122 includes/class-12gm-lms-admin.php:123
+msgid "All Lessons"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:130 includes/class-12gm-lms-admin.php:131
+msgid "Add New Lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:165
+msgid "Course Lessons"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:174
+msgid "Course Access"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:223
+msgid "No Group"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:237
+msgid "Current Lessons in this Course"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:240
+msgid "No lessons assigned to this course yet."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:248
+msgid "Order in Group"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:249
+msgid "Lesson Title"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:250
+msgid "Change Group"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:251
+msgid "Actions"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:279
+msgid "Edit"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:280
+msgid "View"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:293
+msgid "Add Lessons to this Course"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:296
+msgid "No lessons found. Create lessons first."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:298
+msgid "Select lessons to add to this course:"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:316
+msgid "Update Course Lessons"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:321
+msgid "Create New Lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:325
+msgid ""
+"No lesson groups found. Create lesson groups in the Lessons → Lesson Groups "
+"section."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:354
+msgid "Linked WooCommerce Products"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:363
+msgid "No products linked to this course."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:367
+msgid "Purchase of these products will grant access to this course."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:370
+msgid "Manage Products"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:375
+msgid "Manual Enrollment"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:376
+msgid ""
+"To manually enroll or manage student access, use the Student Access page."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:377
+msgid "Manage Student Access"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:439
+msgid "Lessons for course: %s"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:541
+msgid "Assign to Course"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:568
+msgid "Assign this lesson to a course:"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:571
+msgid "No courses found. Create a course first."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:572
+msgid "Create New Course"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:699 includes/class-12gm-lms-admin.php:700
+msgid "Student Access"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:722
+msgid "Access granted successfully!"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:729
+msgid "Access revoked successfully!"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:839
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:844
+msgid "Security check failed."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:858
+msgid "Permalinks have been flushed successfully."
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:34
+msgid "Courses"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:35
+msgid "Course"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:38
+msgid "Course Archives"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:39
+msgid "Course Attributes"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:40
+msgid "Parent Course:"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:43
+msgid "Add New"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:44
+msgid "New Course"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:45
+msgid "Edit Course"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:46
+msgid "Update Course"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:47
+msgid "View Course"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:48
+msgid "View Courses"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:49
+msgid "Search Course"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:50
+msgid "Not found"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:51
+msgid "Not found in Trash"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:52
+msgid "Featured Image"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:53
+msgid "Set featured image"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:54
+msgid "Remove featured image"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:55
+msgid "Use as featured image"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:56
+msgid "Insert into course"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:57
+msgid "Uploaded to this course"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:58
+msgid "Courses list"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:59
+msgid "Courses list navigation"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:60
+msgid "Filter courses list"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:65
+msgid "Course Description"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:100
+msgid "Lessons"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:101
+msgid "Lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:104
+msgid "Lesson Archives"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:105
+msgid "Lesson Attributes"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:106
+msgid "Parent Lesson:"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:110
+msgid "New Lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:111
+msgid "Edit Lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:112
+msgid "Update Lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:113
+msgid "View Lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:114
+msgid "View Lessons"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:115
+msgid "Search Lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:122
+msgid "Insert into lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:123
+msgid "Uploaded to this lesson"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:124
+msgid "Lessons list"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:125
+msgid "Lessons list navigation"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:126
+msgid "Filter lessons list"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:131
+msgid "Lesson Description"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:160
+msgid "Course Categories"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:161
+msgid "Course Category"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:162
+msgid "Search Course Categories"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:163
+msgid "All Course Categories"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:164
+msgid "Parent Course Category"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:165
+msgid "Parent Course Category:"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:166
+msgid "Edit Course Category"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:167
+msgid "Update Course Category"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:168
+msgid "Add New Course Category"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:169
+msgid "New Course Category Name"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:226
+msgid "Student Progress"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:227
+msgid "Progress"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:230
+msgid "Progress Archives"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:231
+msgid "Progress Attributes"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:232
+msgid "Parent Progress:"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:233
+msgid "All Progress"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:234
+msgid "Add New Progress"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:236
+msgid "New Progress"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:237
+msgid "Edit Progress"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:238
+msgid "Update Progress"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:239
+msgid "View Progress"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:241
+msgid "Search Progress"
+msgstr ""
+
+#: includes/class-12gm-lms-post-types.php:248
+msgid "Student Progress Tracking"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:536
+msgid "Other Lessons"
+msgstr ""
+
+#: templates/public/course-content.php:31
+msgid "h "
+msgstr ""
+
+#: templates/public/course-content.php:33
+msgid "min"
+msgstr ""
+
+#: templates/public/course-content.php:33
+msgid "Hour"
+msgstr ""
+
+#: templates/public/course-content.php:33
+msgid "Hours"
+msgstr ""
+
+#: templates/public/course-content.php:35
+msgid "Minutes"
+msgstr ""
+
+#: templates/public/course-content.php:61
+msgid "%d Lessons"
+msgstr ""
+
+#: templates/public/course-content.php:62
+msgid "%s Total"
+msgstr ""
+
+#: templates/public/course-content.php:64
+msgid "%d Students"
+msgstr ""
+
+#: templates/public/course-content.php:75
+msgid "Lessons Completed"
+msgstr ""
+
+#: templates/public/course-content.php:78
+msgid "Lessons Remaining"
+msgstr ""
+
+#: templates/public/course-content.php:87
+msgid "Course Completion"
+msgstr ""
+
+#: templates/public/course-content.php:95
+msgid "Your Progress"
+msgstr ""
+
+#: templates/public/course-content.php:96
+msgid "%d%% Complete"
+msgstr ""
+
+#: templates/public/course-content.php:151 
+#: templates/public/course-content.php:275
+msgid "Upcoming"
+msgstr ""
+
+#: templates/public/course-content.php:224
+msgid "(%d lessons)"
+msgstr ""
+
+#: templates/public/dashboard.php:38
+msgid "%d%% Complete (%d/%d lessons)"
+msgstr ""
+
+#: templates/public/dashboard.php:47
+msgid "Continue Learning"
+msgstr ""
+
+#: templates/public/lesson-content.php:39
+msgid "Lesson completed"
+msgstr ""
+
+#: templates/public/lesson-content.php:44
+msgid "You have completed this lesson"
+msgstr ""
+
+#: templates/public/lesson-content.php:72
+msgid "Previous Lesson"
+msgstr ""
+
+#: templates/public/lesson-content.php:77
+msgid "Back to Course"
+msgstr ""
+
+#: templates/public/lesson-content.php:85
+msgid "Next Group:"
+msgstr ""
+
+#: templates/public/lesson-content.php:87
+msgid "Next Lesson"
+msgstr ""

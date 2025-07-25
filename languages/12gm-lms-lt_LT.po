@@ -6,704 +6,337 @@ msgstr ""
 "Project-Id-Version: 12GM Learning Management System\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-24 12:00+0000\n"
-"PO-Revision-Date: 2024-01-24 12:00+0000\n"
+"PO-Revision-Date: 2025-07-24 17:55+0000\n"
 "Last-Translator: Auto Generated\n"
-"Language-Team: Lithuanian\n"
-"Language: lt_LT\n"
+"Language-Team: Lietuvių kalba\n"
+"Language: lt-LT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Loco https://localise.biz/"
 
-#: includes/class-12gm-lms.php:138
-msgid "Mark as Complete"
-msgstr "Pažymėti kaip baigta"
+#: templates/admin/user-access.php:34
+#, fuzzy
+#| msgid "-- Select a Course --"
+msgid "-- Select Course --"
+msgstr "-- Pasirinkite kursą --"
+
+#: templates/admin/user-access.php:23
+msgid "-- Select Student --"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:383
+msgid "Access Denied"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:536
+msgid "Access granted successfully!"
+msgstr "Prieiga sėkmingai suteikta!"
+
+#: includes/class-12gm-lms-admin.php:543
+msgid "Access revoked successfully!"
+msgstr "Prieiga sėkmingai atšaukta!"
+
+#: templates/admin/user-access.php:134
+msgid "Actions"
+msgstr "Veiksmai"
+
+#: templates/admin/dashboard.php:23
+msgid "Add New"
+msgstr "Pridėti naują"
+
+#: includes/class-12gm-lms-admin.php:90
+msgid "Add New Course"
+msgstr "Pridėti naują kursą"
+
+#: includes/class-12gm-lms-admin.php:106
+msgid "Add New Lesson"
+msgstr "Pridėti naują paskaitą"
+
+#: includes/class-12gm-lms-admin.php:82
+msgid "All Courses"
+msgstr "Visi kursai"
+
+#: includes/class-12gm-lms-admin.php:98
+msgid "All Lessons"
+msgstr "Visos paskaitos"
+
+#: templates/public/lesson-content.php:56
+msgid "Back to Course"
+msgstr "Grįžti į kursą"
+
+#: templates/public/course-content.php:87
+msgid "Back to Dashboard"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:227
+msgid "Browse Courses"
+msgstr ""
 
 #: includes/class-12gm-lms.php:139
 msgid "Completed"
 msgstr "Baigta"
 
-#: includes/class-12gm-lms.php:140
-msgid "Error occurred. Please try again."
-msgstr "Įvyko klaida. Bandykite dar kartą."
+#: templates/admin/user-access.php:31
+msgid "Course"
+msgstr "Kursas"
 
-#: includes/class-12gm-lms.php:144
-msgid "-- Select a Course --"
-msgstr "-- Pasirinkite kursą --"
+#: includes/class-12gm-lms-student.php:330 
+#: includes/class-12gm-lms-student.php:353
+msgid "Course ID is required."
+msgstr ""
 
-#: includes/class-12gm-lms.php:147
-msgid "Error marking lesson as complete"
-msgstr "Klaida pažymint paskaitą kaip baigtą"
+#: includes/class-12gm-lms-student.php:337
+msgid "Course not found."
+msgstr ""
 
-#: includes/class-12gm-lms.php:148
-msgid "Error marking lesson as complete. Please try again."
-msgstr "Klaida pažymint paskaitą kaip baigtą. Bandykite dar kartą."
-
-#: includes/class-12gm-lms.php:149
-msgid "% Complete"
-msgstr "% baigta"
-
-#: includes/class-12gm-lms.php:150
-msgid "lessons"
-msgstr "paskaitos"
-
-#: includes/class-12gm-lms-activator.php:68
-msgid "Mano kursai"
-msgstr "Mano kursai"
-
-#: includes/class-12gm-lms-admin.php:85
-msgid "LMS Dashboard"
-msgstr "LMS valdymo skydas"
-
-#: includes/class-12gm-lms-admin.php:86
-msgid "LMS"
-msgstr "LMS"
-
-#: includes/class-12gm-lms-admin.php:97
-#: includes/class-12gm-lms-admin.php:98
-msgid "Dashboard"
-msgstr "Valdymo skydas"
-
-#: includes/class-12gm-lms-admin.php:106
-#: includes/class-12gm-lms-admin.php:107
-msgid "All Courses"
-msgstr "Visi kursai"
-
-#: includes/class-12gm-lms-admin.php:114
-#: includes/class-12gm-lms-admin.php:115
-msgid "Add New Course"
-msgstr "Pridėti naują kursą"
-
-#: includes/class-12gm-lms-admin.php:122
-#: includes/class-12gm-lms-admin.php:123
-msgid "All Lessons"
-msgstr "Visos paskaitos"
-
-#: includes/class-12gm-lms-admin.php:130
-#: includes/class-12gm-lms-admin.php:131
-msgid "Add New Lesson"
-msgstr "Pridėti naują paskaitą"
-
-#: includes/class-12gm-lms-admin.php:165
-msgid "Course Lessons"
-msgstr "Kurso paskaitos"
-
-#: includes/class-12gm-lms-admin.php:174
-msgid "Course Access"
-msgstr "Prieiga prie kurso"
-
-#: includes/class-12gm-lms-admin.php:223
-msgid "No Group"
-msgstr "Be skyriaus"
-
-#: includes/class-12gm-lms-admin.php:237
-msgid "Current Lessons in this Course"
-msgstr "Dabartinės šio kurso paskaitos"
-
-#: includes/class-12gm-lms-admin.php:240
-msgid "No lessons assigned to this course yet."
-msgstr "Šiam kursui dar nėra priskirta paskaitų."
-
-#: includes/class-12gm-lms-admin.php:248
-msgid "Order in Group"
-msgstr "Tvarka skyriuje"
-
-#: includes/class-12gm-lms-admin.php:249
-msgid "Lesson Title"
-msgstr "Paskaitos pavadinimas"
-
-#: includes/class-12gm-lms-admin.php:250
-msgid "Change Group"
-msgstr "Keisti skyrių"
-
-#: includes/class-12gm-lms-admin.php:251
-msgid "Actions"
-msgstr "Veiksmai"
-
-#: includes/class-12gm-lms-admin.php:267
-msgid "No Group"
-msgstr "Be skyriaus"
-
-#: includes/class-12gm-lms-admin.php:279
-msgid "Edit"
-msgstr "Redaguoti"
-
-#: includes/class-12gm-lms-admin.php:280
-msgid "View"
-msgstr "Peržiūrėti"
-
-#: includes/class-12gm-lms-admin.php:293
-msgid "Add Lessons to this Course"
-msgstr "Pridėti paskaitas prie šio kurso"
-
-#: includes/class-12gm-lms-admin.php:296
-msgid "No lessons found. Create lessons first."
-msgstr "Paskaitų nerasta. Pirmiausia sukurkite paskaitas."
-
-#: includes/class-12gm-lms-admin.php:298
-msgid "Select lessons to add to this course:"
-msgstr "Pasirinkite paskaitas, kurias norite pridėti prie šio kurso:"
-
-#: includes/class-12gm-lms-admin.php:316
-msgid "Update Course Lessons"
-msgstr "Atnaujinti kurso paskaitas"
-
-#: includes/class-12gm-lms-admin.php:321
-msgid "Create New Lesson"
-msgstr "Sukurti naują paskaitą"
-
-#: includes/class-12gm-lms-admin.php:325
-msgid "No lesson groups found. Create lesson groups in the Lessons → Lesson Groups section."
-msgstr "Paskaitų skyrių nerasta. Sukurkite paskaitų skyrius skyriuje Paskaitos → Paskaitų skyriai."
-
-#: includes/class-12gm-lms-admin.php:354
-msgid "Linked WooCommerce Products"
-msgstr "Susieti WooCommerce produktai"
-
-#: includes/class-12gm-lms-admin.php:363
-msgid "No products linked to this course."
-msgstr "Nėra produktų susietų su šiuo kursu."
-
-#: includes/class-12gm-lms-admin.php:367
-msgid "Purchase of these products will grant access to this course."
-msgstr "Šių produktų pirkimas suteiks prieigą prie šio kurso."
-
-#: includes/class-12gm-lms-admin.php:370
-msgid "Manage Products"
-msgstr "Valdyti produktus"
-
-#: includes/class-12gm-lms-admin.php:375
-msgid "Manual Enrollment"
-msgstr "Rankinis registravimas"
-
-#: includes/class-12gm-lms-admin.php:376
-msgid "To manually enroll or manage student access, use the Student Access page."
-msgstr "Norėdami rankiniu būdu užregistruoti arba valdyti dalyvių prieigą, naudokite Dalyvių prieigos puslapį."
-
-#: includes/class-12gm-lms-admin.php:377
-msgid "Manage Student Access"
-msgstr "Valdyti dalyvių prieigą"
-
-#: includes/class-12gm-lms-admin.php:439
-msgid "Lessons for course: %s"
-msgstr "Paskaitos kursui: %s"
-
-#: includes/class-12gm-lms-admin.php:541
-msgid "Assign to Course"
-msgstr "Priskirti kursui"
-
-#: includes/class-12gm-lms-admin.php:568
-msgid "Assign this lesson to a course:"
-msgstr "Priskirkite šią paskaitą kursui:"
-
-#: includes/class-12gm-lms-admin.php:571
-msgid "No courses found. Create a course first."
-msgstr "Kursų nerasta. Pirmiausia sukurkite kursą."
-
-#: includes/class-12gm-lms-admin.php:572
-msgid "Create New Course"
-msgstr "Sukurti naują kursą"
-
-#: includes/class-12gm-lms-admin.php:577
-msgid "-- Select a Course --"
-msgstr "-- Pasirinkite kursą --"
-
-#: includes/class-12gm-lms-admin.php:699
-#: includes/class-12gm-lms-admin.php:700
-msgid "Student Access"
-msgstr "Dalyvių prieiga"
-
-#: includes/class-12gm-lms-admin.php:722
-msgid "Access granted successfully!"
-msgstr "Prieiga sėkmingai suteikta!"
-
-#: includes/class-12gm-lms-admin.php:729
-msgid "Access revoked successfully!"
-msgstr "Prieiga sėkmingai atšaukta!"
-
-#: includes/class-12gm-lms-admin.php:839
-msgid "You do not have sufficient permissions to access this page."
-msgstr "Neturite pakankamų leidimų pasiekti šį puslapį."
-
-#: includes/class-12gm-lms-admin.php:844
-msgid "Security check failed."
-msgstr "Saugumo patikrinimas nepavyko."
-
-#: includes/class-12gm-lms-admin.php:858
-msgid "Permalinks have been flushed successfully."
-msgstr "Nuolatiniai nuorodos sėkmingai išvalyti."
-
-#: includes/class-12gm-lms-post-types.php:34
+#: templates/admin/dashboard.php:12
 msgid "Courses"
 msgstr "Kursai"
-
-#: includes/class-12gm-lms-post-types.php:35
-msgid "Course"
-msgstr "Kursas"
-
-#: includes/class-12gm-lms-post-types.php:36
-msgid "Courses"
-msgstr "Kursai"
-
-#: includes/class-12gm-lms-post-types.php:37
-msgid "Course"
-msgstr "Kursas"
-
-#: includes/class-12gm-lms-post-types.php:38
-msgid "Course Archives"
-msgstr "Kursų archyvai"
-
-#: includes/class-12gm-lms-post-types.php:39
-msgid "Course Attributes"
-msgstr "Kurso atributai"
-
-#: includes/class-12gm-lms-post-types.php:40
-msgid "Parent Course:"
-msgstr "Tėvinis kursas:"
-
-#: includes/class-12gm-lms-post-types.php:41
-msgid "All Courses"
-msgstr "Visi kursai"
-
-#: includes/class-12gm-lms-post-types.php:42
-msgid "Add New Course"
-msgstr "Pridėti naują kursą"
-
-#: includes/class-12gm-lms-post-types.php:43
-msgid "Add New"
-msgstr "Pridėti naują"
-
-#: includes/class-12gm-lms-post-types.php:44
-msgid "New Course"
-msgstr "Naujas kursas"
-
-#: includes/class-12gm-lms-post-types.php:45
-msgid "Edit Course"
-msgstr "Redaguoti kursą"
-
-#: includes/class-12gm-lms-post-types.php:46
-msgid "Update Course"
-msgstr "Atnaujinti kursą"
-
-#: includes/class-12gm-lms-post-types.php:47
-msgid "View Course"
-msgstr "Peržiūrėti kursą"
-
-#: includes/class-12gm-lms-post-types.php:48
-msgid "View Courses"
-msgstr "Peržiūrėti kursus"
-
-#: includes/class-12gm-lms-post-types.php:49
-msgid "Search Course"
-msgstr "Ieškoti kurso"
-
-#: includes/class-12gm-lms-post-types.php:50
-msgid "Not found"
-msgstr "Nerasta"
-
-#: includes/class-12gm-lms-post-types.php:51
-msgid "Not found in Trash"
-msgstr "Šiukšlinėje nerasta"
-
-#: includes/class-12gm-lms-post-types.php:52
-msgid "Featured Image"
-msgstr "Pagrindinė nuotrauka"
-
-#: includes/class-12gm-lms-post-types.php:53
-msgid "Set featured image"
-msgstr "Nustatyti pagrindinę nuotrauką"
-
-#: includes/class-12gm-lms-post-types.php:54
-msgid "Remove featured image"
-msgstr "Pašalinti pagrindinę nuotrauką"
-
-#: includes/class-12gm-lms-post-types.php:55
-msgid "Use as featured image"
-msgstr "Naudoti kaip pagrindinę nuotrauką"
-
-#: includes/class-12gm-lms-post-types.php:56
-msgid "Insert into course"
-msgstr "Įdėti į kursą"
-
-#: includes/class-12gm-lms-post-types.php:57
-msgid "Uploaded to this course"
-msgstr "Įkelta į šį kursą"
-
-#: includes/class-12gm-lms-post-types.php:58
-msgid "Courses list"
-msgstr "Kursų sąrašas"
-
-#: includes/class-12gm-lms-post-types.php:59
-msgid "Courses list navigation"
-msgstr "Kursų sąrašo navigacija"
-
-#: includes/class-12gm-lms-post-types.php:60
-msgid "Filter courses list"
-msgstr "Filtruoti kursų sąrašą"
-
-#: includes/class-12gm-lms-post-types.php:64
-msgid "Course"
-msgstr "Kursas"
-
-#: includes/class-12gm-lms-post-types.php:65
-msgid "Course Description"
-msgstr "Kurso aprašymas"
-
-#: includes/class-12gm-lms-post-types.php:100
-msgid "Lessons"
-msgstr "Paskaitos"
-
-#: includes/class-12gm-lms-post-types.php:101
-msgid "Lesson"
-msgstr "Paskaita"
-
-#: includes/class-12gm-lms-post-types.php:102
-msgid "Lessons"
-msgstr "Paskaitos"
-
-#: includes/class-12gm-lms-post-types.php:103
-msgid "Lesson"
-msgstr "Paskaita"
-
-#: includes/class-12gm-lms-post-types.php:104
-msgid "Lesson Archives"
-msgstr "Paskaitų archyvai"
-
-#: includes/class-12gm-lms-post-types.php:105
-msgid "Lesson Attributes"
-msgstr "Paskaitos atributai"
-
-#: includes/class-12gm-lms-post-types.php:106
-msgid "Parent Lesson:"
-msgstr "Tėvinė paskaita:"
-
-#: includes/class-12gm-lms-post-types.php:107
-msgid "All Lessons"
-msgstr "Visos paskaitos"
-
-#: includes/class-12gm-lms-post-types.php:108
-msgid "Add New Lesson"
-msgstr "Pridėti naują paskaitą"
-
-#: includes/class-12gm-lms-post-types.php:109
-msgid "Add New"
-msgstr "Pridėti naują"
-
-#: includes/class-12gm-lms-post-types.php:110
-msgid "New Lesson"
-msgstr "Nauja paskaita"
-
-#: includes/class-12gm-lms-post-types.php:111
-msgid "Edit Lesson"
-msgstr "Redaguoti paskaitą"
-
-#: includes/class-12gm-lms-post-types.php:112
-msgid "Update Lesson"
-msgstr "Atnaujinti paskaitą"
-
-#: includes/class-12gm-lms-post-types.php:113
-msgid "View Lesson"
-msgstr "Peržiūrėti paskaitą"
-
-#: includes/class-12gm-lms-post-types.php:114
-msgid "View Lessons"
-msgstr "Peržiūrėti paskaitas"
-
-#: includes/class-12gm-lms-post-types.php:115
-msgid "Search Lesson"
-msgstr "Ieškoti paskaitos"
-
-#: includes/class-12gm-lms-post-types.php:116
-msgid "Not found"
-msgstr "Nerasta"
-
-#: includes/class-12gm-lms-post-types.php:117
-msgid "Not found in Trash"
-msgstr "Šiukšlinėje nerasta"
-
-#: includes/class-12gm-lms-post-types.php:118
-msgid "Featured Image"
-msgstr "Pagrindinė nuotrauka"
-
-#: includes/class-12gm-lms-post-types.php:119
-msgid "Set featured image"
-msgstr "Nustatyti pagrindinę nuotrauką"
-
-#: includes/class-12gm-lms-post-types.php:120
-msgid "Remove featured image"
-msgstr "Pašalinti pagrindinę nuotrauką"
-
-#: includes/class-12gm-lms-post-types.php:121
-msgid "Use as featured image"
-msgstr "Naudoti kaip pagrindinę nuotrauką"
-
-#: includes/class-12gm-lms-post-types.php:122
-msgid "Insert into lesson"
-msgstr "Įdėti į paskaitą"
-
-#: includes/class-12gm-lms-post-types.php:123
-msgid "Uploaded to this lesson"
-msgstr "Įkelta į šią paskaitą"
-
-#: includes/class-12gm-lms-post-types.php:124
-msgid "Lessons list"
-msgstr "Paskaitų sąrašas"
-
-#: includes/class-12gm-lms-post-types.php:125
-msgid "Lessons list navigation"
-msgstr "Paskaitų sąrašo navigacija"
-
-#: includes/class-12gm-lms-post-types.php:126
-msgid "Filter lessons list"
-msgstr "Filtruoti paskaitų sąrašą"
-
-#: includes/class-12gm-lms-post-types.php:130
-msgid "Lesson"
-msgstr "Paskaita"
-
-#: includes/class-12gm-lms-post-types.php:131
-msgid "Lesson Description"
-msgstr "Paskaitos aprašymas"
-
-#: includes/class-12gm-lms-post-types.php:160
-msgid "Course Categories"
-msgstr "Kursų kategorijos"
-
-#: includes/class-12gm-lms-post-types.php:161
-msgid "Course Category"
-msgstr "Kurso kategorija"
-
-#: includes/class-12gm-lms-post-types.php:162
-msgid "Search Course Categories"
-msgstr "Ieškoti kursų kategorijų"
-
-#: includes/class-12gm-lms-post-types.php:163
-msgid "All Course Categories"
-msgstr "Visos kursų kategorijos"
-
-#: includes/class-12gm-lms-post-types.php:164
-msgid "Parent Course Category"
-msgstr "Tėvinė kurso kategorija"
-
-#: includes/class-12gm-lms-post-types.php:165
-msgid "Parent Course Category:"
-msgstr "Tėvinė kurso kategorija:"
-
-#: includes/class-12gm-lms-post-types.php:166
-msgid "Edit Course Category"
-msgstr "Redaguoti kurso kategoriją"
-
-#: includes/class-12gm-lms-post-types.php:167
-msgid "Update Course Category"
-msgstr "Atnaujinti kurso kategoriją"
-
-#: includes/class-12gm-lms-post-types.php:168
-msgid "Add New Course Category"
-msgstr "Pridėti naują kurso kategoriją"
-
-#: includes/class-12gm-lms-post-types.php:169
-msgid "New Course Category Name"
-msgstr "Naujos kurso kategorijos pavadinimas"
-
-#: includes/class-12gm-lms-post-types.php:170
-msgid "Course Categories"
-msgstr "Kursų kategorijos"
-
-#: includes/class-12gm-lms-post-types.php:226
-msgid "Student Progress"
-msgstr "Dalyvių progresas"
-
-#: includes/class-12gm-lms-post-types.php:227
-msgid "Progress"
-msgstr "Progresas"
-
-#: includes/class-12gm-lms-post-types.php:228
-msgid "Student Progress"
-msgstr "Dalyvių progresas"
-
-#: includes/class-12gm-lms-post-types.php:229
-msgid "Progress"
-msgstr "Progresas"
-
-#: includes/class-12gm-lms-post-types.php:230
-msgid "Progress Archives"
-msgstr "Progreso archyvai"
-
-#: includes/class-12gm-lms-post-types.php:231
-msgid "Progress Attributes"
-msgstr "Progreso atributai"
-
-#: includes/class-12gm-lms-post-types.php:232
-msgid "Parent Progress:"
-msgstr "Tėvinis progresas:"
-
-#: includes/class-12gm-lms-post-types.php:233
-msgid "All Progress"
-msgstr "Visas progresas"
-
-#: includes/class-12gm-lms-post-types.php:234
-msgid "Add New Progress"
-msgstr "Pridėti naują progresą"
-
-#: includes/class-12gm-lms-post-types.php:235
-msgid "Add New"
-msgstr "Pridėti naują"
-
-#: includes/class-12gm-lms-post-types.php:236
-msgid "New Progress"
-msgstr "Naujas progresas"
-
-#: includes/class-12gm-lms-post-types.php:237
-msgid "Edit Progress"
-msgstr "Redaguoti progresą"
-
-#: includes/class-12gm-lms-post-types.php:238
-msgid "Update Progress"
-msgstr "Atnaujinti progresą"
-
-#: includes/class-12gm-lms-post-types.php:239
-msgid "View Progress"
-msgstr "Peržiūrėti progresą"
-
-#: includes/class-12gm-lms-post-types.php:240
-msgid "View Progress"
-msgstr "Peržiūrėti progresą"
-
-#: includes/class-12gm-lms-post-types.php:241
-msgid "Search Progress"
-msgstr "Ieškoti progreso"
-
-#: includes/class-12gm-lms-post-types.php:242
-msgid "Not found"
-msgstr "Nerasta"
-
-#: includes/class-12gm-lms-post-types.php:243
-msgid "Not found in Trash"
-msgstr "Šiukšlinėje nerasta"
-
-#: includes/class-12gm-lms-post-types.php:247
-msgid "Progress"
-msgstr "Progresas"
-
-#: includes/class-12gm-lms-post-types.php:248
-msgid "Student Progress Tracking"
-msgstr "Dalyvių progreso sekimas"
-
-#: includes/class-12gm-lms-student.php:536
-msgid "Other Lessons"
-msgstr "Kitos paskaitos"
-
-#: templates/public/course-content.php:31
-msgid "h "
-msgstr "val. "
-
-#: templates/public/course-content.php:33
-msgid "min"
-msgstr "min."
-
-#: templates/public/course-content.php:33
-msgid "Hour"
-msgstr "Valanda"
-
-#: templates/public/course-content.php:33
-msgid "Hours"
-msgstr "Valandos"
-
-#: templates/public/course-content.php:35
-msgid "Minutes"
-msgstr "Minutės"
-
-#: templates/public/course-content.php:61
-msgid "%d Lessons"
-msgstr "%d paskaitos"
-
-#: templates/public/course-content.php:62
-msgid "%s Total"
-msgstr "%s iš viso"
-
-#: templates/public/course-content.php:64
-msgid "%d Students"
-msgstr "%d dalyviai"
-
-#: templates/public/course-content.php:75
-msgid "Lessons Completed"
-msgstr "Baigtos paskaitos"
-
-#: templates/public/course-content.php:78
-msgid "Lessons Remaining"
-msgstr "Likusios paskaitos"
-
-#: templates/public/course-content.php:87
-msgid "Course Completion"
-msgstr "Kurso baigimas"
-
-#: templates/public/course-content.php:95
-msgid "Your Progress"
-msgstr "Jūsų progresas"
-
-#: templates/public/course-content.php:96
-msgid "%d%% Complete"
-msgstr "%d%% baigta"
-
-#: templates/public/course-content.php:102
-#: templates/public/course-content.php:162
-msgid "Course Lessons"
-msgstr "Kurso paskaitos"
-
-#: templates/public/course-content.php:149
-#: templates/public/course-content.php:273
-msgid "Completed"
-msgstr "Baigta"
-
-#: templates/public/course-content.php:151
-#: templates/public/course-content.php:275
-msgid "Upcoming"
-msgstr "Artėja"
-
-#: templates/public/course-content.php:224
-msgid "(%d lessons)"
-msgstr "(%d paskaitos)"
-
-#: templates/public/dashboard.php:38
-msgid "%d%% Complete (%d/%d lessons)"
-msgstr "%d%% baigta (%d/%d paskaitos)"
-
-#: templates/public/dashboard.php:47
-msgid "Continue Learning"
-msgstr "Tęsti mokymąsi"
 
 #: templates/public/lesson-content.php:11
 msgid "Dashboard"
 msgstr "Valdymo skydas"
 
-#: templates/public/lesson-content.php:35
-msgid "Mark as Complete"
-msgstr "Pažymėti kaip baigta"
+#: templates/admin/user-access.php:131
+msgid "Email"
+msgstr ""
+
+#: templates/admin/user-access.php:132
+msgid "Enrolled Courses"
+msgstr ""
+
+#: templates/admin/user-access.php:91
+msgid "Enrolled Students"
+msgstr ""
+
+#: templates/public/lesson-content.php:113
+msgid "Error marking lesson as complete. Please try again."
+msgstr "Klaida pažymint paskaitą kaip baigtą. Bandykite dar kartą."
+
+#: includes/class-12gm-lms.php:140
+msgid "Error occurred. Please try again."
+msgstr "Įvyko klaida. Bandykite dar kartą."
+
+#: templates/admin/dashboard.php:94
+msgid "Flush Permalinks"
+msgstr ""
+
+#: templates/admin/user-access.php:44
+msgid "Grant Access"
+msgstr ""
+
+#: templates/admin/user-access.php:12
+msgid "Grant Course Access"
+msgstr ""
+
+#: templates/admin/dashboard.php:92
+msgid ""
+"If you are experiencing 404 errors when trying to view courses or lessons, "
+"try flushing the permalinks."
+msgstr ""
 
 #: templates/public/lesson-content.php:39
 msgid "Lesson completed"
 msgstr "Paskaita baigta"
 
+#: includes/class-12gm-lms-student.php:426
+msgid "Lesson ID is required."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:538
+msgid "Lesson marked as complete"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:433
+msgid "Lesson not found."
+msgstr ""
+
+#: templates/public/course-content.php:36
+msgid "Lessons"
+msgstr "Paskaitos"
+
+#: templates/admin/dashboard.php:66
+msgid ""
+"Link your courses to WooCommerce products to sell access to your courses."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:61
+msgid "LMS"
+msgstr "LMS"
+
+#: includes/class-12gm-lms-admin.php:60
+msgid "LMS Dashboard"
+msgstr "LMS valdymo skydas"
+
+#: includes/class-12gm-lms-student.php:209
+msgid "Log In"
+msgstr ""
+
+#: templates/admin/dashboard.php:22
+msgid "Manage Courses"
+msgstr ""
+
+#: templates/admin/dashboard.php:39
+msgid "Manage Lessons"
+msgstr ""
+
+#: templates/admin/dashboard.php:69
+msgid "Manage Products"
+msgstr "Valdyti produktus"
+
+#: templates/admin/dashboard.php:56
+msgid "Manage Student Access"
+msgstr "Valdyti dalyvių prieigą"
+
+#: templates/public/lesson-content.php:34
+msgid "Mark as Complete"
+msgstr "Pažymėti kaip baigta"
+
+#: includes/class-12gm-lms-student.php:157 
+#: includes/class-12gm-lms-student.php:595
+#, fuzzy
+#| msgid "Courses"
+msgid "My Courses"
+msgstr "Kursai"
+
+#: templates/public/lesson-content.php:61
+msgid "Next Lesson"
+msgstr "Kita paskaita"
+
+#: includes/class-12gm-lms-student.php:225
+msgid "No Courses Found"
+msgstr ""
+
+#: templates/public/course-content.php:39
+msgid "No lessons found for this course."
+msgstr ""
+
+#: templates/admin/user-access.php:125
+msgid "No students are currently enrolled in any courses."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:671
+msgid "Permalinks have been flushed successfully."
+msgstr "Nuolatiniai nuorodos sėkmingai išvalyti."
+
+#: includes/class-12gm-lms-student.php:398
+msgid "Please contact the site administrator for access."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:207 
+#: includes/class-12gm-lms-student.php:603
+msgid "Please Log In"
+msgstr ""
+
+#: templates/public/lesson-content.php:51
+msgid "Previous Lesson"
+msgstr "Ankstesnė paskaita"
+
+#: templates/admin/user-access.php:133
+msgid "Progress"
+msgstr "Progresas"
+
+#: templates/admin/dashboard.php:18
+msgid "Published Courses"
+msgstr ""
+
+#: templates/admin/dashboard.php:35
+msgid "Published Lessons"
+msgstr ""
+
+#: templates/admin/dashboard.php:75
+msgid "Quick Links"
+msgstr ""
+
+#: templates/public/course-content.php:73
+#, fuzzy
+#| msgid "View Lesson"
+msgid "Review Lesson"
+msgstr "Peržiūrėti paskaitą"
+
+#: templates/admin/user-access.php:84
+msgid "Revoke Access"
+msgstr ""
+
+#: templates/admin/user-access.php:50
+msgid "Revoke Course Access"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:657
+msgid "Security check failed."
+msgstr "Saugumo patikrinimas nepavyko."
+
+#: templates/public/course-content.php:75
+#, fuzzy
+#| msgid "Search Lesson"
+msgid "Start Lesson"
+msgstr "Ieškoti paskaitos"
+
+#: templates/admin/user-access.php:20
+msgid "Student"
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:514 includes/class-12gm-lms-admin.php:515
+msgid "Student Access"
+msgstr "Dalyvių prieiga"
+
+#: templates/admin/user-access.php:9
+msgid "Student Access Management"
+msgstr ""
+
+#: templates/admin/dashboard.php:46
+#, fuzzy
+#| msgid "%d Students"
+msgid "Students"
+msgstr "%d dalyviai"
+
+#: templates/admin/dashboard.php:91
+msgid "Tools"
+msgstr ""
+
+#: templates/admin/dashboard.php:85
+msgid "View Student Dashboard"
+msgstr ""
+
+#: templates/admin/dashboard.php:63
+msgid "WooCommerce"
+msgstr ""
+
+#: templates/admin/dashboard.php:83
+msgid "WooCommerce Products"
+msgstr ""
+
+#: templates/admin/dashboard.php:97
+msgid "WordPress Permalinks Settings"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:226
+msgid "You are not enrolled in any courses yet."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:387
+msgid "You can purchase this course by clicking one of the links below:"
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:384
+msgid "You do not have access to this course."
+msgstr ""
+
+#: includes/class-12gm-lms-student.php:437
+msgid "You do not have access to this lesson."
+msgstr ""
+
+#: includes/class-12gm-lms-admin.php:652
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Neturite pakankamų leidimų pasiekti šį puslapį."
+
 #: templates/public/lesson-content.php:44
 msgid "You have completed this lesson"
 msgstr "Jūs baigėte šią paskaitą"
 
-#: templates/public/lesson-content.php:72
-msgid "Previous Lesson"
-msgstr "Ankstesnė paskaita"
-
-#: templates/public/lesson-content.php:77
-msgid "Back to Course"
-msgstr "Grįžti į kursą"
-
-#: templates/public/lesson-content.php:85
-msgid "Next Group:"
-msgstr "Kitas skyrius:"
-
-#: templates/public/lesson-content.php:87
-msgid "Next Lesson"
-msgstr "Kita paskaita"
-
-#: templates/public/lesson-content.php:141
-msgid "Error marking lesson as complete. Please try again."
-msgstr "Klaida pažymint paskaitą kaip baigtą. Bandykite dar kartą."
+#: includes/class-12gm-lms-student.php:208
+msgid "You need to be logged in to view your courses."
+msgstr ""
