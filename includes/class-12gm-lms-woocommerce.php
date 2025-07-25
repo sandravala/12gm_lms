@@ -86,7 +86,7 @@ class TwelveGM_LMS_WooCommerce {
         
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
-            
+
             $linked_courses = get_post_meta($product_id, '_12gm_lms_linked_courses', true);
             
             if (is_array($linked_courses) && !empty($linked_courses)) {
@@ -212,7 +212,7 @@ class TwelveGM_LMS_WooCommerce {
      * @param array $course_products
      * @param int $order_id
      */
-    private function send_welcome_email_with_password_reset($user_id, $course_products, $order_id) {
+        private function send_welcome_email_with_password_reset($user_id, $course_products, $order_id) {
         $user = get_user_by('id', $user_id);
         
         if (!$user) {
@@ -227,12 +227,13 @@ class TwelveGM_LMS_WooCommerce {
         }
         
         // Build course list for email
-        $course_list = '';
+        $course_list = '<ul>';
         $course_count = 0;
         foreach ($course_products as $product_data) {
-            $course_list .= "• " . $product_data['product_name'] . "\n";
+            $course_list .= '<li>' . esc_html($product_data['product_name']) . '</li>';
             $course_count += count($product_data['courses']);
         }
+        $course_list .= '</ul>';
         
         // Create password reset URL
         $reset_url = network_site_url("wp-login.php?action=rp&key=$reset_key&login=" . rawurlencode($user->user_login), 'login');
@@ -240,37 +241,30 @@ class TwelveGM_LMS_WooCommerce {
         // Get dashboard URL
         $dashboard_url = get_permalink(get_option('12gm_lms_dashboard_page_id'));
         
-        $subject = sprintf('Sveiki atvykę į %s - nustatykite slaptažodį, kad galėtumėte pasiekti savo kursus', get_bloginfo('name'));
-        
-        $message = sprintf('
-Sveiki %s,
+        $subject = 'Valio!!! Tavo 12GM paskyra sukurta!';
 
-Ačiū už pirkimą! Sukūrėme jums paskyrą, kad galėtumėte pasiekti savo kursus.
+        $reset_button = '<a href="' . esc_url($reset_url) . '" style="display:inline-block;padding:10px 20px;background-color:#2196F3;color:#ffffff;text-decoration:none;border-radius:4px;">Nustatyti slaptažodį</a>';
+        $dashboard_button = '<a href="' . esc_url($dashboard_url) . '" style="display:inline-block;padding:10px 20px;background-color:#4CAF50;color:#ffffff;text-decoration:none;border-radius:4px;">Atidaryti skydą</a>';
 
-Jūsų įsigyti kursai:
-%s
-
-Norėdami pasiekti savo kursus, turite nustatyti slaptažodį:
-
-1. Spauskite šią nuorodą, kad nustatytumėte slaptažodį: %s
-2. Nustatę slaptažodį, aplankykite savo kursų skydą: %s
-
-Jūsų vartotojo vardas: %s
-Jūsų el. paštas: %s
-
-Slaptažodžio atkūrimo nuoroda galioja 24 valandas. Jei reikia naujos nuorodos, galite ją užsisakyti čia: %s
-
-Su pagarba,
-%s komanda
-        ', 
+        $message = sprintf(
+            'Labas %s,<br><br>' .
+            'Ačiū už pirkimą! Tavo įsigyti produktai:<br><br>' .
+            '%s<br><br>' .
+            'Susikurk slaptažodį, kad galėtum prisijungti ir peržiūrėti savo kursus:<br><br>' .
+            '%s<br><br>' .
+            '%s<br><br>' .
+            'Tavo vartotojo vardas: %s<br>' .
+            'Tavo el. paštas: %s<br><br>' .
+            'SVARBU: slaptažodžio sukūrimo nuoroda galioja 24 valandas. Jei reikia naujos nuorodos, galite ją susigeneruoti čia: <a href="%s">%s</a><br><br>' .
+            'Iki pasimatymo,<br>12GM komanda',
             $user->display_name,
             $course_list,
-            $reset_url,
-            $dashboard_url,
+            $reset_button,
+            $dashboard_button,
             $user->user_login,
             $user->user_email,
             wp_lostpassword_url(),
-            get_bloginfo('name')
+            wp_lostpassword_url()
         );
         
         // Use WordPress/WooCommerce mailer
@@ -279,7 +273,8 @@ Su pagarba,
             $wrapped_message = $mailer->wrap_message($subject, $message);
             $sent = $mailer->send($user->user_email, $subject, $wrapped_message);
         } else {
-            $sent = wp_mail($user->user_email, $subject, $message);
+            $headers = array('Content-Type: text/html; charset=UTF-8');
+            $sent = wp_mail($user->user_email, $subject, $message, $headers);
         }
         
         if ($sent) {

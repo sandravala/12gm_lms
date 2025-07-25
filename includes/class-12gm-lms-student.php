@@ -286,7 +286,7 @@ class TwelveGM_LMS_Student
         <div class="12gm-lms-login-message">
             <h3><?php _e('Reikia prisijungti', '12gm-lms'); ?></h3>
             <p><?php _e('Norint peržiūrėti savo kursus, reikia prisijungti.', '12gm-lms'); ?></p>
-            <p><a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>" class="button"><?php _e('Log In', '12gm-lms'); ?></a></p>
+            <p><a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>" class="button"><?php _e('Prisijungti', '12gm-lms'); ?></a></p>
         </div>
     <?php
         return ob_get_clean();
@@ -470,11 +470,11 @@ class TwelveGM_LMS_Student
         ob_start();
     ?>
         <div class="12gm-lms-access-denied">
-            <h3><?php _e('Access Denied', '12gm-lms'); ?></h3>
-            <p><?php _e('You do not have access to this course.', '12gm-lms'); ?></p>
+            <h3><?php _e('Peržiūra negalima', '12gm-lms'); ?></h3>
+            <p><?php _e('Neturi prieigos prie šio kurso.', '12gm-lms'); ?></p>
 
             <?php if (! empty($products)): ?>
-                <p><?php _e('You can purchase this course by clicking one of the links below:', '12gm-lms'); ?></p>
+                <p><?php _e('Gali įsigyti šį kursą paspaudus vieną iš žemiau esančių nuorodų:', '12gm-lms'); ?></p>
                 <ul class="12gm-lms-product-links">
                     <?php foreach ($products as $product): ?>
                         <li>
@@ -485,7 +485,7 @@ class TwelveGM_LMS_Student
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
-                <p><?php _e('Please contact the site administrator for access.', '12gm-lms'); ?></p>
+                <p><?php _e('Susisiek su svetainės administratoriumi dėl prieigos.', '12gm-lms'); ?></p>
             <?php endif; ?>
         </div>
 <?php
@@ -521,12 +521,12 @@ class TwelveGM_LMS_Student
         $lesson    = get_post($lesson_id);
 
         if (! $lesson || $lesson->post_status !== 'publish') {
-            return __('Lesson not found.', '12gm-lms');
+            return __('Paskaita nerasta.', '12gm-lms');
         }
 
         // Check if user can access this lesson
         if (! $this->user_can_access_lesson($lesson_id)) {
-            return __('You do not have access to this lesson.', '12gm-lms');
+            return __('Paskaitos peržiūra negalima.', '12gm-lms');
         }
 
         // Get course information
@@ -573,7 +573,7 @@ class TwelveGM_LMS_Student
 
             if ($current_group_id !== $next_group_id) {
                 $is_moving_to_new_group = true;
-                $next_group_name = !empty($next_lesson_groups) ? $next_lesson_groups[0]->name : __('Other Lessons', '12gm-lms');
+                $next_group_name = !empty($next_lesson_groups) ? $next_lesson_groups[0]->name : __('Kitos paskaitos', '12gm-lms');
             }
         }
 
@@ -628,13 +628,13 @@ class TwelveGM_LMS_Student
         $course_id = $this->get_course_for_lesson($lesson_id);
 
         if (! $course_id) {
-            wp_send_json_error('Lesson is not assigned to a course');
+            wp_send_json_error('Paskaita nepriskirta kursui');
             wp_die();
         }
 
         // Check if user has access
         if (! $this->woocommerce->has_course_access($user_id, $course_id)) {
-            wp_send_json_error('You do not have access to this course');
+            wp_send_json_error('Kurso peržiūra negalima.');
             wp_die();
         }
 
@@ -656,7 +656,7 @@ class TwelveGM_LMS_Student
         $progress = $this->get_course_progress($user_id, $course_id);
 
         wp_send_json_success([
-            'message'  => __('Lesson marked as complete', '12gm-lms'),
+            'message'  => __('Paskaita pažymėta kaip baigta', '12gm-lms'),
             'progress' => $progress,
         ]);
 
