@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce integration for the plugin.
+ * Enhanced WooCommerce integration with secure guest course purchase handling.
  *
  * @since      1.0.0
  */
@@ -23,6 +23,271 @@ class TwelveGM_LMS_WooCommerce {
         
         // Grant access to courses when products are purchased
         add_action('woocommerce_order_status_completed', array($this, 'process_completed_order'));
+        
+    }
+
+    /**
+     * Process completed orders to grant access to courses.
+     * Now handles both logged-in users and guests.
+     *
+     * @since    1.0.0
+     * @param    int    $order_id    The order ID.
+     */
+    public function process_completed_order($order_id) {
+        $order = wc_get_order($order_id);
+        $user_id = $order->get_user_id();
+        $customer_email = $order->get_billing_email();
+        
+        // Validate we have at least an email
+        if (!$customer_email) {
+            error_log('12GM LMS: No customer email found for order #' . $order_id);
+            return;
+        }
+        
+        $course_products = $this->get_course_products_from_order($order);
+        
+        if (empty($course_products)) {
+            return; // No course products in this order
+        }
+        
+        if ($user_id) {
+            // Existing user - grant access immediately
+            $this->process_user_course_access($user_id, $course_products);
+        } else {
+            // Guest purchase - create account and grant access
+            $user_id = $this->create_account_for_guest_purchase($customer_email, $order);
+            if ($user_id && !is_wp_error($user_id)) {
+                // Update the order to associate it with the new user
+                $order->set_customer_id($user_id);
+                $order->save();
+                
+                // Grant course access
+                $this->process_user_course_access($user_id, $course_products);
+                
+                // Send welcome email with password reset link
+                $this->send_welcome_email_with_password_reset($user_id, $course_products, $order_id);
+                
+                // Log the account creation
+                error_log('12GM LMS: Auto-created account for guest purchase. User ID: ' . $user_id . ', Email: ' . $customer_email);
+            } else {
+                error_log('12GM LMS: Failed to create account for guest: ' . $customer_email . ' - ' . (is_wp_error($user_id) ? $user_id->get_error_message() : 'Unknown error'));
+            }
+        }
+    }
+    
+    /**
+     * Get course products from an order.
+     *
+     * @param WC_Order $order
+     * @return array Array of course IDs grouped by product
+     */
+    private function get_course_products_from_order($order) {
+        $course_products = array();
+        
+        foreach ($order->get_items() as $item) {
+            $product_id = $item->get_product_id();
+            
+            $linked_courses = get_post_meta($product_id, '_12gm_lms_linked_courses', true);
+            
+            if (is_array($linked_courses) && !empty($linked_courses)) {
+                $course_products[$product_id] = array(
+                    'product_name' => $item->get_name(),
+                    'courses' => $linked_courses
+                );
+            }
+        }
+        
+        return $course_products;
+    }
+    
+    /**
+     * Process course access for existing users.
+     *
+     * @param int $user_id
+     * @param array $course_products
+     */
+    private function process_user_course_access($user_id, $course_products) {
+        foreach ($course_products as $product_data) {
+            foreach ($product_data['courses'] as $course_id) {
+                $this->grant_course_access($user_id, $course_id);
+            }
+        }
+    }
+    
+    /**
+     * Create a user account for a guest purchase.
+     *
+     * @param string $email Customer email
+     * @param WC_Order $order The order object
+     * @return int|WP_Error User ID on success, WP_Error on failure
+     */
+    private function create_account_for_guest_purchase($email, $order) {
+        // Check if user already exists
+        if (email_exists($email)) {
+            // User exists but didn't log in for purchase
+            // Grant access to existing user
+            $user = get_user_by('email', $email);
+            return $user->ID;
+        }
+        
+        // Generate username from email
+        $username = $this->generate_unique_username($email);
+        
+        // Generate a random password (user will reset it)
+        $password = wp_generate_password(12, true, true);
+        
+        // Get customer name from order
+        $first_name = $order->get_billing_first_name();
+        $last_name = $order->get_billing_last_name();
+        $display_name = trim($first_name . ' ' . $last_name);
+        if (empty($display_name)) {
+            $display_name = $username;
+        }
+        
+        // Create user
+        $user_id = wp_create_user($username, $password, $email);
+        
+        if (is_wp_error($user_id)) {
+            return $user_id;
+        }
+        
+        // Set additional user data
+        wp_update_user(array(
+            'ID' => $user_id,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'display_name' => $display_name,
+        ));
+        
+        // Set user role (customer if WooCommerce is active, subscriber otherwise)
+        $user = new WP_User($user_id);
+        if (class_exists('WooCommerce')) {
+            $user->set_role('customer');
+        } else {
+            $user->set_role('subscriber');
+        }
+        
+        // Add meta to track this was auto-created for course purchase
+        update_user_meta($user_id, '12gm_lms_auto_created', true);
+        update_user_meta($user_id, '12gm_lms_auto_created_date', current_time('mysql'));
+        update_user_meta($user_id, '12gm_lms_auto_created_order', $order->get_id());
+        
+        return $user_id;
+    }
+    
+    /**
+     * Generate a unique username from email.
+     *
+     * @param string $email
+     * @return string
+     */
+    private function generate_unique_username($email) {
+        // Get the part before @ symbol
+        $username = sanitize_user(current(explode('@', $email)), true);
+        
+        // Remove any remaining dots or special characters
+        $username = str_replace('.', '', $username);
+        $username = preg_replace('/[^a-zA-Z0-9]/', '', $username);
+        
+        // Ensure it's not empty
+        if (empty($username)) {
+            $username = 'user';
+        }
+        
+        // Ensure username is unique
+        $original_username = $username;
+        $counter = 1;
+        while (username_exists($username)) {
+            $username = $original_username . $counter;
+            $counter++;
+        }
+        
+        return $username;
+    }
+    
+    /**
+     * Send welcome email with password reset link.
+     *
+     * @param int $user_id
+     * @param array $course_products
+     * @param int $order_id
+     */
+    private function send_welcome_email_with_password_reset($user_id, $course_products, $order_id) {
+        $user = get_user_by('id', $user_id);
+        
+        if (!$user) {
+            return;
+        }
+        
+        // Generate password reset key
+        $reset_key = get_password_reset_key($user);
+        if (is_wp_error($reset_key)) {
+            error_log('12GM LMS: Failed to generate password reset key for user ' . $user_id);
+            return;
+        }
+        
+        // Build course list for email
+        $course_list = '';
+        $course_count = 0;
+        foreach ($course_products as $product_data) {
+            $course_list .= "• " . $product_data['product_name'] . "\n";
+            $course_count += count($product_data['courses']);
+        }
+        
+        // Create password reset URL
+        $reset_url = network_site_url("wp-login.php?action=rp&key=$reset_key&login=" . rawurlencode($user->user_login), 'login');
+        
+        // Get dashboard URL
+        $dashboard_url = get_permalink(get_option('12gm_lms_dashboard_page_id'));
+        
+        $subject = sprintf('Sveiki atvykę į %s - nustatykite slaptažodį, kad galėtumėte pasiekti savo kursus', get_bloginfo('name'));
+        
+        $message = sprintf('
+Sveiki %s,
+
+Ačiū už pirkimą! Sukūrėme jums paskyrą, kad galėtumėte pasiekti savo kursus.
+
+Jūsų įsigyti kursai:
+%s
+
+Norėdami pasiekti savo kursus, turite nustatyti slaptažodį:
+
+1. Spauskite šią nuorodą, kad nustatytumėte slaptažodį: %s
+2. Nustatę slaptažodį, aplankykite savo kursų skydą: %s
+
+Jūsų vartotojo vardas: %s
+Jūsų el. paštas: %s
+
+Slaptažodžio atkūrimo nuoroda galioja 24 valandas. Jei reikia naujos nuorodos, galite ją užsisakyti čia: %s
+
+Su pagarba,
+%s komanda
+        ', 
+            $user->display_name,
+            $course_list,
+            $reset_url,
+            $dashboard_url,
+            $user->user_login,
+            $user->user_email,
+            wp_lostpassword_url(),
+            get_bloginfo('name')
+        );
+        
+        // Use WordPress/WooCommerce mailer
+        if (class_exists('WC_Emails')) {
+            $mailer = WC()->mailer();
+            $wrapped_message = $mailer->wrap_message($subject, $message);
+            $sent = $mailer->send($user->user_email, $subject, $wrapped_message);
+        } else {
+            $sent = wp_mail($user->user_email, $subject, $message);
+        }
+        
+        if ($sent) {
+            // Log successful email
+            update_user_meta($user_id, '12gm_lms_welcome_email_sent', current_time('mysql'));
+        } else {
+            error_log('12GM LMS: Failed to send welcome email to ' . $user->user_email);
+        }
     }
 
     /**
@@ -75,10 +340,10 @@ class TwelveGM_LMS_WooCommerce {
             'order' => 'ASC',
         ));
 
-        echo '<p>' . __('Select courses to grant access when this product is purchased:', '12gm-lms') . '</p>';
+        echo '<p>Pasirinkite kursus, prie kurių suteikti prieigą, kai šis produktas bus nupirktas:</p>';
         
         if (empty($courses)) {
-            echo '<p>' . __('No courses found.', '12gm-lms') . '</p>';
+            echo '<p>Kursų nerasta.</p>';
             return;
         }
 
@@ -126,35 +391,6 @@ class TwelveGM_LMS_WooCommerce {
         update_post_meta($post_id, '_12gm_lms_linked_courses', $linked_courses);
     }
 
-    /**
-     * Process completed orders to grant access to courses.
-     *
-     * @since    1.0.0
-     * @param    int    $order_id    The order ID.
-     */
-    public function process_completed_order($order_id) {
-        $order = wc_get_order($order_id);
-        $user_id = $order->get_user_id();
-        
-        // If no user is associated with the order, exit
-        if (!$user_id) {
-            return;
-        }
-        
-        // Loop through order items
-        foreach ($order->get_items() as $item) {
-            $product_id = $item->get_id();
-            $linked_courses = get_post_meta($product_id, '_12gm_lms_linked_courses', true);
-            
-            if (is_array($linked_courses) && !empty($linked_courses)) {
-                foreach ($linked_courses as $course_id) {
-                    // Grant access to the course
-                    $this->grant_course_access($user_id, $course_id);
-                }
-            }
-        }
-    }
-    
     /**
      * Grant access to a course for a user.
      *

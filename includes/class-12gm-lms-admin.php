@@ -140,6 +140,15 @@ class TwelveGM_LMS_Admin
             'manage_categories', // Capability required
             'edit-tags.php?taxonomy=lesson_group&post_type=12gm_lesson' // URL for the taxonomy management page
         );
+
+        add_submenu_page(
+        '12gm-lms',
+        'Automatiškai sukurtos paskyros',
+        'Svečių paskyros',
+        'manage_options',
+        '12gm-lms-guest-accounts',
+        array($this, 'display_guest_accounts_page')
+    );
     }
 
     /**
@@ -834,6 +843,77 @@ class TwelveGM_LMS_Admin
 
         return $results;
     }
+
+    /**
+ * Display the guest accounts page.
+ *
+ * @since    1.0.0
+ */
+public function display_guest_accounts_page() {
+    // Get auto-created users
+    $auto_created_users = get_users(array(
+        'meta_key' => '12gm_lms_auto_created',
+        'meta_value' => true,
+        'orderby' => 'registered',
+        'order' => 'DESC',
+    ));
+    
+    echo '<div class="wrap">';
+    echo '<h1>Automatiškai sukurtos vartotojų paskyros</h1>';
+    echo '<p>Šios paskyros buvo automatiškai sukurtos svečių pirkimams kursų produktų.</p>';
+    
+    if (empty($auto_created_users)) {
+        echo '<p>Automatiškai sukurtų paskyrų nerasta.</p>';
+    } else {
+        echo '<table class="wp-list-table widefat fixed striped">';
+        echo '<thead><tr>';
+        echo '<th>Vartotojas</th>';
+        echo '<th>El. paštas</th>';
+        echo '<th>Sukūrimo data</th>';
+        echo '<th>Užsakymo ID</th>';
+        echo '<th>Pasisveikinimo laiškas išsiųstas</th>';
+        echo '<th>Paskutinis prisijungimas</th>';
+        echo '<th>Būsena</th>';
+        echo '</tr></thead><tbody>';
+        
+        foreach ($auto_created_users as $user) {
+            $created_date = get_user_meta($user->ID, '12gm_lms_auto_created_date', true);
+            $order_id = get_user_meta($user->ID, '12gm_lms_auto_created_order', true);
+            $email_sent = get_user_meta($user->ID, '12gm_lms_welcome_email_sent', true);
+            $last_login = get_user_meta($user->ID, 'last_login', true);
+            
+            // Check if user has set their password (by checking if they've logged in)
+            $has_set_password = !empty($last_login) ? true : false;
+            
+            echo '<tr>';
+            echo '<td><a href="' . admin_url('user-edit.php?user_id=' . $user->ID) . '">' . esc_html($user->display_name) . ' (' . esc_html($user->user_login) . ')</a></td>';
+            echo '<td>' . esc_html($user->user_email) . '</td>';
+            echo '<td>' . esc_html($created_date ? $created_date : $user->user_registered) . '</td>';
+            echo '<td>';
+            if ($order_id) {
+                echo '<a href="' . admin_url('post.php?post=' . $order_id . '&action=edit') . '">#' . $order_id . '</a>';
+            } else {
+                echo '—';
+            }
+            echo '</td>';
+            echo '<td>' . ($email_sent ? '<span style="color: green;">✓ ' . esc_html($email_sent) . '</span>' : '<span style="color: red;">✗</span>') . '</td>';
+            echo '<td>' . ($last_login ? esc_html($last_login) : '<span style="color: #666;">Niekada</span>') . '</td>';
+            echo '<td>';
+            if ($has_set_password) {
+                echo '<span style="color: green;">Aktyvi</span>';
+            } else {
+                echo '<span style="color: orange;">Laukia nustatymo</span>';
+                echo '<br><a href="' . wp_lostpassword_url() . '?user_login=' . urlencode($user->user_login) . '" target="_blank" class="button button-small">Siųsti atkūrimo nuorodą</a>';
+            }
+            echo '</td>';
+            echo '</tr>';
+        }
+        
+        echo '</tbody></table>';
+    }
+    
+    echo '</div>';
+}
 
     /**
      * Handle the flush rewrite rules request.

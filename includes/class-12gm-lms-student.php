@@ -279,8 +279,8 @@ class TwelveGM_LMS_Student
         ob_start();
 ?>
         <div class="12gm-lms-login-message">
-            <h3><?php _e('Please Log In', '12gm-lms'); ?></h3>
-            <p><?php _e('You need to be logged in to view your courses.', '12gm-lms'); ?></p>
+            <h3><?php _e('Reikia prisijungti', '12gm-lms'); ?></h3>
+            <p><?php _e('Norint peržiūrėti savo kursus, reikia prisijungti.', '12gm-lms'); ?></p>
             <p><a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>" class="button"><?php _e('Log In', '12gm-lms'); ?></a></p>
         </div>
     <?php
