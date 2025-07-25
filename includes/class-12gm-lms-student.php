@@ -56,6 +56,10 @@ class TwelveGM_LMS_Student
 
         // Add theme support
         add_action('after_setup_theme', ['TwelveGM_LMS_Template_Loader', 'add_theme_support']);
+
+        // Add dashboard link to WooCommerce My Account page
+        add_filter('woocommerce_account_menu_items', [$this, 'add_dashboard_account_link']);
+        add_filter('woocommerce_get_endpoint_url', [$this, 'filter_dashboard_account_url'], 10, 4);
     }
 
     /**
@@ -803,5 +807,48 @@ class TwelveGM_LMS_Student
         //         'href'   => admin_url('admin.php?page=12gm-lms-user-access'),
         //     ]);
         // }
+    }
+
+    /**
+     * Add "My Courses" link to the WooCommerce account menu.
+     *
+     * @since    1.0.0
+     * @param    array  $items  Existing account menu items.
+     * @return   array  Modified account menu items.
+     */
+    public function add_dashboard_account_link($items)
+    {
+        // Make sure the dashboard link appears before the logout item
+        $logout = $items['customer-logout'] ?? false;
+        if ($logout) {
+            unset($items['customer-logout']);
+        }
+
+        $items['lms-dashboard'] = __('Mano kursai', '12gm-lms');
+
+        if ($logout) {
+            $items['customer-logout'] = $logout;
+        }
+
+        return $items;
+    }
+
+    /**
+     * Filter the URL for the custom dashboard menu item.
+     *
+     * @since    1.0.0
+     * @param    string $url        Generated URL.
+     * @param    string $endpoint   Endpoint name.
+     * @param    string $value      Query param value (unused).
+     * @param    string $permalink  My account page permalink.
+     * @return   string Modified URL for our custom endpoint.
+     */
+    public function filter_dashboard_account_url($url, $endpoint, $value, $permalink)
+    {
+        if ($endpoint === 'lms-dashboard') {
+            $url = get_permalink(get_option('12gm_lms_dashboard_page_id'));
+        }
+
+        return $url;
     }
 }
