@@ -109,7 +109,7 @@
 
         <div class="lessons-container">
             <div class="lessons-list">
-                <!-- <h2><?php _e('Course Lessons', '12gm-lms'); ?></h2> -->
+                <!-- <h2><?php _e('Paskaitos', '12gm-lms'); ?></h2> -->
 
                 <?php if (empty($lessons)): ?>
                     <p><?php _e('Šiam kursui dar nepriskirtos paskaitos.', '12gm-lms'); ?></p>

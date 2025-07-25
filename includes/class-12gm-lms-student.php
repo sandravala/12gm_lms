@@ -189,47 +189,82 @@ class TwelveGM_LMS_Student
             return $this->render_login_message();
         }
 
-        $user_id          = get_current_user_id();
-        $enrolled_courses = [];
+        $user_id = get_current_user_id();
+        $is_admin = current_user_can('edit_posts');
 
-        // If user is admin or editor, always allow access
-        if (current_user_can('edit_posts')) {
-            $all_courses = get_posts(['post_type' => '12gm_course']);
-            foreach ($all_courses as $course) {
-                $enrolled_courses[] += $course->ID;
-            }
-        } else {
-            $enrolled_courses = get_user_meta($user_id, '12gm_lms_enrolled_courses', true);
+        // Get enrolled courses
+        $enrolled_courses = get_user_meta($user_id, '12gm_lms_enrolled_courses', true);
+        if (!is_array($enrolled_courses)) {
+            $enrolled_courses = [];
         }
 
-        if (! is_array($enrolled_courses) || empty($enrolled_courses)) {
+        // Prepare course arrays
+        $user_courses = [];
+        $admin_courses = [];
+
+        if ($is_admin) {
+            // Get all courses for admin
+            $all_courses = get_posts([
+                'post_type' => '12gm_course',
+                'post_status' => 'publish',
+                'numberposts' => -1,
+                'orderby' => 'title',
+                'order' => 'ASC'
+            ]);
+
+            foreach ($all_courses as $course) {
+                $progress = $this->get_course_progress($user_id, $course->ID);
+
+                $course_data = [
+                    'id'        => $course->ID,
+                    'title'     => $course->post_title,
+                    'excerpt'   => $course->post_excerpt,
+                    'link'      => get_permalink($course->ID),
+                    'thumbnail' => get_the_post_thumbnail_url($course->ID, 'medium'),
+                    'progress'  => $progress,
+                ];
+
+                if (in_array($course->ID, $enrolled_courses)) {
+                    $user_courses[] = $course_data;
+                } else {
+                    $admin_courses[] = $course_data;
+                }
+            }
+        } else {
+            // Regular user - only enrolled courses
+            if (empty($enrolled_courses)) {
+                return $this->render_no_courses_message();
+            }
+
+            foreach ($enrolled_courses as $course_id) {
+                $course = get_post($course_id);
+                if (! $course || $course->post_status !== 'publish') {
+                    continue;
+                }
+
+                $progress = $this->get_course_progress($user_id, $course_id);
+
+                $user_courses[] = [
+                    'id'        => $course_id,
+                    'title'     => $course->post_title,
+                    'excerpt'   => $course->post_excerpt,
+                    'link'      => get_permalink($course_id),
+                    'thumbnail' => get_the_post_thumbnail_url($course_id, 'medium'),
+                    'progress'  => $progress,
+                ];
+            }
+        }
+
+        // If neither enrolled courses nor admin courses exist
+        if (empty($user_courses) && empty($admin_courses)) {
             return $this->render_no_courses_message();
         }
 
-        // Get course details
-        $courses = [];
-        foreach ($enrolled_courses as $course_id) {
-            $course = get_post($course_id);
-            if (! $course || $course->post_status !== 'publish') {
-                continue;
-            }
-
-            // Get progress data
-            $progress = $this->get_course_progress($user_id, $course_id);
-
-            $courses[] = [
-                'id'        => $course_id,
-                'title'     => $course->post_title,
-                'excerpt'   => $course->post_excerpt,
-                'link'      => get_permalink($course_id),
-                'thumbnail' => get_the_post_thumbnail_url($course_id, 'medium'),
-                'progress'  => $progress,
-            ];
-        }
-
         return TwelveGM_LMS_Template_Loader::load_template('dashboard.php', [
-            'courses' => $courses,
-            'atts'    => $atts,
+            'user_courses' => $user_courses,
+            'admin_courses' => $admin_courses,
+            'is_admin' => $is_admin,
+            'atts' => $atts,
         ]);
     }
 
@@ -263,9 +298,9 @@ class TwelveGM_LMS_Student
         ob_start();
     ?>
         <div class="12gm-lms-no-courses-message">
-            <h3><?php _e('No Courses Found', '12gm-lms'); ?></h3>
-            <p><?php _e('You are not enrolled in any courses yet.', '12gm-lms'); ?></p>
-            <p><a href="<?php echo esc_url(home_url('/shop/')); ?>" class="button"><?php _e('Browse Courses', '12gm-lms'); ?></a></p>
+            <h3><?php _e('Kursų nėra!', '12gm-lms'); ?></h3>
+            <p><?php _e('Kol kas neturi prieigos prie kursų.', '12gm-lms'); ?></p>
+            <p><a href="<?php echo esc_url(home_url('/produkto-kategorija/kursai/')); ?>" class="button"><?php _e('Panaršyk, gal rasi sau tinkamą!', '12gm-lms'); ?></a></p>
         </div>
     <?php
         return ob_get_clean();
@@ -295,12 +330,7 @@ class TwelveGM_LMS_Student
 
         // Get completed lessons
         $completed_lessons = $this->get_completed_lessons($user_id, $course_id);
-        $completed_count = 0;
-        foreach ($completed_lessons as $lesson_id) {
-            if (in_array($lesson_id, wp_list_pluck($lessons, 'ID'))) {
-                $completed_count++;
-            }
-        }
+        $completed_count = count(array_intersect(wp_list_pluck($lessons, 'ID'), $completed_lessons));
 
         // Calculate percentage
         $percentage = ($total_lessons > 0) ? floor(($completed_count / $total_lessons) * 100) : 0;
@@ -501,66 +531,66 @@ class TwelveGM_LMS_Student
         // Get all lessons in the course
         $course_lessons = $this->get_course_lessons($course_id);
 
-// Initialize navigation variables
-$current_position = 0;
-$prev_lesson = null;
-$next_lesson = null;
+        // Initialize navigation variables
+        $current_position = 0;
+        $prev_lesson = null;
+        $next_lesson = null;
 
-// Find current lesson index in the ordered lessons array
-foreach ($course_lessons as $i => $course_lesson) {
-    if ($course_lesson->ID == $lesson_id) {
-        $current_position = $i;
+        // Find current lesson index in the ordered lessons array
+        foreach ($course_lessons as $i => $course_lesson) {
+            if ($course_lesson->ID == $lesson_id) {
+                $current_position = $i;
 
-        // Previous lesson (handles group transitions automatically)
-        if ($i > 0) {
-            $prev_lesson = $course_lessons[$i - 1];
+                // Previous lesson (handles group transitions automatically)
+                if ($i > 0) {
+                    $prev_lesson = $course_lessons[$i - 1];
+                }
+
+                // Next lesson (handles group transitions automatically)
+                if ($i < count($course_lessons) - 1) {
+                    $next_lesson = $course_lessons[$i + 1];
+                }
+
+                break;
+            }
         }
 
-        // Next lesson (handles group transitions automatically)
-        if ($i < count($course_lessons) - 1) {
-            $next_lesson = $course_lessons[$i + 1];
+        // Add group transition information for template
+        $is_moving_to_new_group = false;
+        $next_group_name = '';
+
+        if ($next_lesson) {
+            $current_lesson_groups = wp_get_post_terms($lesson_id, 'lesson_group');
+            $next_lesson_groups = wp_get_post_terms($next_lesson->ID, 'lesson_group');
+
+            $current_group_id = !empty($current_lesson_groups) ? $current_lesson_groups[0]->term_id : 'ungrouped';
+            $next_group_id = !empty($next_lesson_groups) ? $next_lesson_groups[0]->term_id : 'ungrouped';
+
+            if ($current_group_id !== $next_group_id) {
+                $is_moving_to_new_group = true;
+                $next_group_name = !empty($next_lesson_groups) ? $next_lesson_groups[0]->name : __('Other Lessons', '12gm-lms');
+            }
         }
-
-        break;
-    }
-}
-
-// Add group transition information for template
-$is_moving_to_new_group = false;
-$next_group_name = '';
-
-if ($next_lesson) {
-    $current_lesson_groups = wp_get_post_terms($lesson_id, 'lesson_group');
-    $next_lesson_groups = wp_get_post_terms($next_lesson->ID, 'lesson_group');
-    
-    $current_group_id = !empty($current_lesson_groups) ? $current_lesson_groups[0]->term_id : 'ungrouped';
-    $next_group_id = !empty($next_lesson_groups) ? $next_lesson_groups[0]->term_id : 'ungrouped';
-    
-    if ($current_group_id !== $next_group_id) {
-        $is_moving_to_new_group = true;
-        $next_group_name = !empty($next_lesson_groups) ? $next_lesson_groups[0]->name : __('Other Lessons', '12gm-lms');
-    }
-}
 
         // Check if user has completed this lesson
         $user_id           = get_current_user_id();
         $completed_lessons = $this->get_completed_lessons($user_id, $course_id);
         $is_completed      = in_array($lesson_id, $completed_lessons);
 
-return TwelveGM_LMS_Template_Loader::load_template('lesson-content.php', [
-    'lesson'                 => $lesson,
-    'course'                 => $course,
-    'course_id'              => $course_id,
-    'course_lessons'         => $course_lessons,
-    'current_position'       => $current_position,
-    'prev_lesson'            => $prev_lesson,
-    'next_lesson'            => $next_lesson,
-    'user_id'                => $user_id,
-    'completed_lessons'      => $completed_lessons,
-    'is_completed'           => $is_completed,
-    'is_moving_to_new_group' => $is_moving_to_new_group,
-    'next_group_name'        => $next_group_name,
-]);
+        return TwelveGM_LMS_Template_Loader::load_template('lesson-content.php', [
+            'lesson'                 => $lesson,
+            'course'                 => $course,
+            'course_id'              => $course_id,
+            'course_lessons'         => $course_lessons,
+            'current_position'       => $current_position,
+            'prev_lesson'            => $prev_lesson,
+            'next_lesson'            => $next_lesson,
+            'user_id'                => $user_id,
+            'completed_lessons'      => $completed_lessons,
+            'is_completed'           => $is_completed,
+            'is_moving_to_new_group' => $is_moving_to_new_group,
+            'next_group_name'        => $next_group_name,
+        ]);
     }
 
     /**
