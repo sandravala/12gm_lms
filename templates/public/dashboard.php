@@ -6,7 +6,7 @@
  */
 ?>
 <div class="sv-lms-dashboard">
-    <h2 class="sv-lms-title entry-title"><?php echo esc_html($atts['title']); ?></h2>
+    <!-- <h2 class="sv-lms-title entry-title"><?php echo esc_html($atts['title']); ?></h2> -->
     
     <div class="sv-lms-courses-grid courses-grid">
         <?php foreach ($courses as $course): ?>
@@ -35,16 +35,19 @@
                             <div class="sv-lms-progress-fill" style="width: <?php echo esc_attr($course['progress']['percentage']); ?>%;"></div>
                         </div>
                         <div class="sv-lms-progress-text">
-                            <?php echo sprintf(__('%d%% Complete (%d/%d lessons)', '12gm-lms'), 
-                                $course['progress']['percentage'], 
+                            <span><?php echo sprintf(__('Peržiūrėta: %d%% ', '12gm-lms'), 
+                                $course['progress']['percentage']); ?>
+                                </span>
+                                <span><?php echo sprintf(__('Paskaitų: %d iš %d', '12gm-lms'), 
                                 $course['progress']['completed'], 
                                 $course['progress']['total']); ?>
+                                </span>
                         </div>
                     </div>
                     
                     <div class="sv-lms-course-actions">
                         <a href="<?php echo esc_url($course['link']); ?>" class="button sv-lms-course-button">
-                            <?php _e('Continue Learning', '12gm-lms'); ?>
+                            <?php _e('Peržiūrėti', '12gm-lms'); ?>
                         </a>
                     </div>
                 </div>

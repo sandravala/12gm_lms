@@ -295,7 +295,12 @@ class TwelveGM_LMS_Student
 
         // Get completed lessons
         $completed_lessons = $this->get_completed_lessons($user_id, $course_id);
-        $completed_count   = count($completed_lessons);
+        $completed_count = 0;
+        foreach ($completed_lessons as $lesson_id) {
+            if (in_array($lesson_id, wp_list_pluck($lessons, 'ID'))) {
+                $completed_count++;
+            }
+        }
 
         // Calculate percentage
         $percentage = ($total_lessons > 0) ? floor(($completed_count / $total_lessons) * 100) : 0;
@@ -672,29 +677,29 @@ return TwelveGM_LMS_Template_Loader::load_template('lesson-content.php', [
         // Add the parent menu
         $wp_admin_bar->add_node([
             'id'    => '12gm-lms-courses',
-            'title' => '<span class="ab-icon dashicons dashicons-welcome-learn-more"></span>' . __('My Courses', '12gm-lms'),
+            'title' => '<span class="ab-icon dashicons dashicons-welcome-learn-more"></span>' . __('Mano kursai', '12gm-lms'),
             'href'  => $dashboard_url,
         ]);
 
-        // Add dashboard submenu
-        $wp_admin_bar->add_node([
-            'id'     => '12gm-lms-dashboard',
-            'parent' => '12gm-lms-courses',
-            'title'  => __('Learning Dashboard', '12gm-lms'),
-            'href'   => $dashboard_url,
-        ]);
+        // // Add dashboard submenu
+        // $wp_admin_bar->add_node([
+        //     'id'     => '12gm-lms-dashboard',
+        //     'parent' => '12gm-lms-courses',
+        //     'title'  => __('Learning Dashboard', '12gm-lms'),
+        //     'href'   => $dashboard_url,
+        // ]);
 
         // Add courses as submenu items
         if (! empty($enrolled_courses) && is_array($enrolled_courses)) {
-            $wp_admin_bar->add_node([
-                'id'     => '12gm-lms-enrolled',
-                'parent' => '12gm-lms-courses',
-                'title'  => __('Enrolled Courses', '12gm-lms'),
-                'href'   => $dashboard_url,
-                'meta'   => [
-                    'class' => '12gm-lms-menu-header',
-                ],
-            ]);
+            // $wp_admin_bar->add_node([
+            //     'id'     => '12gm-lms-enrolled',
+            //     'parent' => '12gm-lms-courses',
+            //     'title'  => __('Enrolled Courses', '12gm-lms'),
+            //     'href'   => $dashboard_url,
+            //     'meta'   => [
+            //         'class' => '12gm-lms-menu-header',
+            //     ],
+            // ]);
 
             // Get latest 5 courses that the user is enrolled in
             $courses_to_show = array_slice($enrolled_courses, 0, 5);
@@ -722,51 +727,51 @@ return TwelveGM_LMS_Template_Loader::load_template('lesson-content.php', [
                 $wp_admin_bar->add_node([
                     'id'     => '12gm-lms-view-all',
                     'parent' => '12gm-lms-courses',
-                    'title'  => __('View All Courses', '12gm-lms'),
+                    'title'  => __('Peržiūrėti viską', '12gm-lms'),
                     'href'   => $dashboard_url,
                 ]);
             }
         }
 
-        // Add admin links for staff
-        if (current_user_can('edit_posts')) {
-            $wp_admin_bar->add_node([
-                'id'     => '12gm-lms-admin',
-                'parent' => '12gm-lms-courses',
-                'title'  => __('LMS Admin', '12gm-lms'),
-                'href'   => admin_url('admin.php?page=12gm-lms'),
-                'meta'   => [
-                    'class' => '12gm-lms-menu-header',
-                ],
-            ]);
+        // // Add admin links for staff
+        // if (current_user_can('edit_posts')) {
+        //     $wp_admin_bar->add_node([
+        //         'id'     => '12gm-lms-admin',
+        //         'parent' => '12gm-lms-courses',
+        //         'title'  => __('LMS Admin', '12gm-lms'),
+        //         'href'   => admin_url('admin.php?page=12gm-lms'),
+        //         'meta'   => [
+        //             'class' => '12gm-lms-menu-header',
+        //         ],
+        //     ]);
 
-            $wp_admin_bar->add_node([
-                'id'     => '12gm-lms-admin-dashboard',
-                'parent' => '12gm-lms-courses',
-                'title'  => __('LMS Dashboard', '12gm-lms'),
-                'href'   => admin_url('admin.php?page=12gm-lms'),
-            ]);
+        //     $wp_admin_bar->add_node([
+        //         'id'     => '12gm-lms-admin-dashboard',
+        //         'parent' => '12gm-lms-courses',
+        //         'title'  => __('LMS Dashboard', '12gm-lms'),
+        //         'href'   => admin_url('admin.php?page=12gm-lms'),
+        //     ]);
 
-            $wp_admin_bar->add_node([
-                'id'     => '12gm-lms-admin-courses',
-                'parent' => '12gm-lms-courses',
-                'title'  => __('Manage Courses', '12gm-lms'),
-                'href'   => admin_url('edit.php?post_type=12gm_course'),
-            ]);
+        //     $wp_admin_bar->add_node([
+        //         'id'     => '12gm-lms-admin-courses',
+        //         'parent' => '12gm-lms-courses',
+        //         'title'  => __('Manage Courses', '12gm-lms'),
+        //         'href'   => admin_url('edit.php?post_type=12gm_course'),
+        //     ]);
 
-            $wp_admin_bar->add_node([
-                'id'     => '12gm-lms-admin-lessons',
-                'parent' => '12gm-lms-courses',
-                'title'  => __('Manage Lessons', '12gm-lms'),
-                'href'   => admin_url('edit.php?post_type=12gm_lesson'),
-            ]);
+        //     $wp_admin_bar->add_node([
+        //         'id'     => '12gm-lms-admin-lessons',
+        //         'parent' => '12gm-lms-courses',
+        //         'title'  => __('Manage Lessons', '12gm-lms'),
+        //         'href'   => admin_url('edit.php?post_type=12gm_lesson'),
+        //     ]);
 
-            $wp_admin_bar->add_node([
-                'id'     => '12gm-lms-admin-students',
-                'parent' => '12gm-lms-courses',
-                'title'  => __('Manage Students', '12gm-lms'),
-                'href'   => admin_url('admin.php?page=12gm-lms-user-access'),
-            ]);
-        }
+        //     $wp_admin_bar->add_node([
+        //         'id'     => '12gm-lms-admin-students',
+        //         'parent' => '12gm-lms-courses',
+        //         'title'  => __('Manage Students', '12gm-lms'),
+        //         'href'   => admin_url('admin.php?page=12gm-lms-user-access'),
+        //     ]);
+        // }
     }
 }

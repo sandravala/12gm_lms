@@ -105,6 +105,12 @@ h1 {
     margin-bottom: 40px;
 }
 
+.course-finished {
+    color: #5f9c98;
+    font-size: xx-large;
+    font-weight: 400;
+}
+
 .progress-stats {
     display: flex;
     gap: 20px;
@@ -125,7 +131,7 @@ h1 {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 5px;
-    color: var(--primary-color);
+    color: #9093c4;
 }
 
 .stat-label {
@@ -194,6 +200,7 @@ h2 {
     overflow: hidden;
 }
 
+
 .lesson-group-title {
     background: #f8f9fa;
     padding: 1rem 1.5rem;
@@ -201,6 +208,10 @@ h2 {
     font-size: 1.1rem;
     font-weight: 600;
     border-bottom: 1px solid #e1e5e9;
+}
+
+h3.lesson-group-title.accordion-header {
+    color: #351f44;
 }
 
 .lesson-count {
@@ -216,6 +227,31 @@ h2 {
     border-bottom: 1px solid #e1e5e9;
     color: #6c757d;
     font-style: italic;
+}
+
+.accordion-header {
+    cursor: pointer;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+
+.accordion-header:hover {
+    background-color: #e0e0e0;
+}
+
+.accordion-icon {
+    font-size: xx-large;
+    line-height: .5;
+    font-weight: 900;
+    color: thistle;
+}
+
+.accordion-content {
+    display: none; /* Initially hidden */
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .lesson-group-content {
@@ -262,7 +298,7 @@ h2 {
 }
 
 .lesson-completed .lesson-icon {
-    background-color: var(--secondary-color);
+    background-color: #8CC9C5;
     color: white;
 }
 
@@ -295,11 +331,11 @@ h2 {
 }
 
 .lesson-status.completed {
-    color: var(--secondary-color);
+    color: #588784;
 }
 
 .lesson-status.in-progress {
-    color: #f39c12;
+    color: #FF5E31;
 }
 
 .lesson-status.locked {
@@ -463,7 +499,8 @@ h2 {
 }
 
 .sv-lms-course-thumbnail {
-    height: 180px;
+    height: auto;
+    width: 100%;
     overflow: hidden;
     position: relative;
 }
@@ -487,6 +524,8 @@ h2 {
     font-size: 20px;
     margin-bottom: 10px;
     transition: color 0.3s;
+    text-align: center;
+    margin-top: 0;
 }
 
 .sv-lms-course-card:hover .sv-lms-course-title {
@@ -495,7 +534,7 @@ h2 {
 
 .sv-lms-course-title a {
     color: inherit;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .sv-lms-course-excerpt {
@@ -513,13 +552,14 @@ h2 {
     height: 8px;
     background-color: var(--light-gray);
     border-radius: 4px;
+    margin-top: 10px;
     margin-bottom: 5px;
     overflow: hidden;
 }
 
 .sv-lms-progress-fill {
     height: 100%;
-    background-color: var(--secondary-color);
+    background: linear-gradient(to right, #8CC9C5 0%, #C0A9E2 100%);
     border-radius: 4px;
 }
 
@@ -532,6 +572,7 @@ h2 {
 
 .sv-lms-course-actions {
     margin-top: 15px;
+    text-align: center;
 }
 
 .sv-lms-course-button {
@@ -601,7 +642,6 @@ h2 {
     padding: 30px;
     border-radius: var(--border-radius);
     box-shadow: var(--card-shadow);
-    margin-bottom: 40px;
 }
 
 .sv-lms-course-lessons {
@@ -762,7 +802,7 @@ h2 {
 
 #sv-lms-mark-complete-btn {
     padding: 10px 20px;
-    background-color: var(--secondary-color);
+    background-color: #5f9c98;
     color: white;
     border: none;
     border-radius: 4px;
@@ -799,7 +839,7 @@ h2 {
 }
 
 .sv-lms-lesson-completed-message {
-    color: var(--secondary-color);
+    color: #5f9c98;
     display: flex;
     align-items: center;
     gap: 5px;

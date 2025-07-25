@@ -11,11 +11,11 @@
     <div class="course-header">
 
         <div class="course-info">
-        <div class="sv-lms-lesson-breadcrumbs breadcrumbs">
-            <a href="<?php echo esc_url(get_permalink(get_option('12gm_lms_dashboard_page_id'))); ?>"><?php _e('Dashboard', '12gm-lms'); ?></a>
-            &raquo;
-            <a href="<?php echo esc_url(get_permalink($course->ID)); ?>"><?php echo esc_html($course->post_title); ?></a>
-        </div>
+            <div class="sv-lms-lesson-breadcrumbs breadcrumbs">
+                <a href="<?php echo esc_url(get_permalink(get_option('12gm_lms_dashboard_page_id'))); ?>"><?php _e('Mano kursai', '12gm-lms'); ?></a>
+                &raquo;
+                <a href="<?php echo esc_url(get_permalink($course->ID)); ?>"><?php echo esc_html($course->post_title); ?></a>
+            </div>
 
             <h1><?php echo esc_html($course->post_title); ?></h1>
             <?php
@@ -35,9 +35,9 @@
             if ($total_hours > 0 && $remaining_minutes > 0) {
                 $formatted_duration = $total_hours . __('h ', '12gm-lms') . $remaining_minutes . __('min', '12gm-lms');
             } elseif ($total_hours > 0) {
-                $formatted_duration = $total_hours . ' ' . ($total_hours == 1 ? __('Hour', '12gm-lms') : __('Hours', '12gm-lms'));
+                $formatted_duration = $total_hours . ' ' . __('h', '12gm-lms');
             } else {
-                $formatted_duration = $remaining_minutes . ' ' . __('Minutes', '12gm-lms');
+                $formatted_duration = $remaining_minutes . ' ' . __('min', '12gm-lms');
             }
 
 
@@ -63,10 +63,10 @@
             $course_students = max($actual_enrolled, $minimum_display);
             ?>
             <div class="course-meta">
-                <div class="course-lessons">📚 <?php printf(__('%d Lessons', '12gm-lms'), $progress['total']); ?></div>
-                <div class="course-duration">⏱️ <?php printf(__('%s Total', '12gm-lms'), esc_html($formatted_duration)); ?></div>
+                <div class="course-lessons">📚 <?php printf(__('Paskaitų: %d', '12gm-lms'), $progress['total']); ?></div>
+                <div class="course-duration">⏱️ <?php printf(__('Trukmė: %s', '12gm-lms'), esc_html($formatted_duration)); ?></div>
                 <?php if ($course_students > 10): ?>
-                    <div class="course-students">👥 <?php printf(__('%d Students', '12gm-lms'), $course_students); ?></div>
+                    <div class="course-students">👥 <?php printf(__('Dalyvių: %d', '12gm-lms'), $course_students); ?></div>
                 <?php endif; ?>
             </div>
 
@@ -74,40 +74,45 @@
         </div>
 
         <div class="course-progress-container">
-            <div class="progress-stats">
-                <div class="stat-item">
-                    <div class="stat-value"><?php echo esc_attr($progress['completed']); ?></div>
-                    <div class="stat-label"><?php _e('Lessons Completed', '12gm-lms'); ?></div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value"><?php echo esc_attr($progress['total'] - $progress['completed']); ?></div>
-                    <div class="stat-label"><?php _e('Lessons Remaining', '12gm-lms'); ?></div>
-                </div>
-                <!-- <div class="stat-item">
+            <?php if (!($progress['percentage'] < 100)): ?>
+                <div class="course-finished"><?php _e('Eina sau! Sėkmingai užbaigei visą kursą!', '12gm-lms'); ?></div>
+            <?php else: ?>
+                <div class="progress-stats">
+                    <div class="stat-item">
+                        <div class="stat-value"><?php echo esc_attr($progress['completed']); ?></div>
+                        <div class="stat-label"><?php _e('Užbaigtų paskaitų', '12gm-lms'); ?></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value"><?php echo esc_attr($progress['total'] - $progress['completed']); ?></div>
+                        <div class="stat-label"><?php _e('Liko peržiūrėti', '12gm-lms'); ?></div>
+                    </div>
+                    <!-- <div class="stat-item">
                     <div class="stat-value">4.5</div>
                     <div class="stat-label">Hours Spent</div>
                 </div> -->
-                <div class="stat-item">
-                    <div class="stat-value"><?php echo esc_attr($progress['percentage']); ?>%</div>
-                    <div class="stat-label"><?php _e('Course Completion', '12gm-lms'); ?></div>
+                    <div class="stat-item">
+                        <div class="stat-value"><?php echo esc_attr($progress['percentage']); ?>%</div>
+                        <div class="stat-label"><?php $progress['percentage'] < 50 ? _e('Oho! Jau padarei nemažą progresą', '12gm-lms') : _e('Wow! Tau puikiai sekasi - netoli ir pabaiga!', '12gm-lms'); ?></div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:<?php echo esc_attr($progress['percentage']); ?>%"></div>
-            </div>
-            <div class="progress-text">
-                <span><?php _e('Your Progress', '12gm-lms'); ?></span>
-                <span class="progress-percentage"><?php printf(__('%d%% Complete', '12gm-lms'), $progress['percentage']); ?></span>
-            </div>
+                <div class="sv-lms-progress-bar">
+                    <div class="sv-lms-progress-fill" style="width:<?php echo esc_attr($progress['percentage']); ?>%"></div>
+                </div>
+                <!-- <div class="progress-text">
+                    <span><?php _e('Tavo progresas', '12gm-lms'); ?></span>
+                    <span class="progress-percentage"><?php printf(__('%d%%', '12gm-lms'), $progress['percentage']); ?></span>
+                </div> -->
+            <?php endif; ?>
         </div>
+
 
         <div class="lessons-container">
             <div class="lessons-list">
-                <h2><?php _e('Course Lessons', '12gm-lms'); ?></h2>
+                <!-- <h2><?php _e('Course Lessons', '12gm-lms'); ?></h2> -->
 
                 <?php if (empty($lessons)): ?>
-                    <p><?php _e('No lessons found for this course.', '12gm-lms'); ?></p>
+                    <p><?php _e('Šiam kursui dar nepriskirtos paskaitos.', '12gm-lms'); ?></p>
                 <?php else: ?>
                     <?php
                     // Find the first incomplete lesson for "current" status
@@ -134,7 +139,7 @@
                         } else {
                             // Treat ungrouped lessons as a special group
                             $group_key = 'ungrouped';
-                            $group_name = __('Course Lessons', '12gm-lms');
+                            $group_name = __('Papildomos paskaitos', '12gm-lms');
                             $group_description = '';
                         }
 
@@ -161,11 +166,22 @@
                     ?>
 
                     <?php foreach ($grouped_lessons as $group_key => $group_data): ?>
+                        <?php
+                        // Check if the group contains unfinished lessons
+                        $has_unfinished_lessons = false;
+                        foreach ($group_data['lessons'] as $lesson) {
+                            if (!in_array($lesson->ID, $completed_lessons)) {
+                                $has_unfinished_lessons = true;
+                                break;
+                            }
+                        }
+                        ?>
                         <div class="lesson-group <?php echo $has_groups ? '' : 'no-groups'; ?>">
                             <?php if ($has_groups || $group_key !== 'ungrouped'): ?>
-                                <h3 class="lesson-group-title">
+                                <h3 class="lesson-group-title accordion-header" data-group-id="<?php echo esc_attr($group_key); ?>">
                                     <?php echo esc_html($group_data['name']); ?>
-                                    <span class="lesson-count"><?php printf(__('(%d lessons)', '12gm-lms'), count($group_data['lessons'])); ?></span>
+                                    <span class="lesson-count"><?php printf(__('(Paskaitų: %d)', '12gm-lms'), count($group_data['lessons'])); ?></span>
+                                    <span class="accordion-icon" style="float: right;"><?php echo $has_unfinished_lessons ? '-' : '+'; ?></span>
                                 </h3>
 
                                 <?php if (!empty($group_data['description'])): ?>
@@ -175,10 +191,10 @@
                                 <?php endif; ?>
                             <?php endif; ?>
 
-                            <div class="lesson-group-content">
-                                <?php 
+                            <div class="lesson-group-content accordion-content" id="group-<?php echo esc_attr($group_key); ?>" style="<?php echo $has_unfinished_lessons ? 'display: block;' : 'display: none;'; ?>">
+                                <?php
                                 $lesson_counter = 0;
-                                 foreach ($group_data['lessons'] as $lesson):
+                                foreach ($group_data['lessons'] as $lesson):
                                     $lesson_counter++;
                                     $is_completed = in_array($lesson->ID, $completed_lessons);
                                     $is_current = (!$is_completed && $lesson->ID == $first_incomplete_lesson_id);
@@ -197,26 +213,26 @@
                                                 <div class="lesson-meta">
                                                     <?php
                                                     $lesson_type = get_post_meta($lesson->ID, '_lesson_type', true) ?: 'video';
-                                                    $lesson_minutes = get_post_meta($lesson->ID, '_lesson_duration', true) ?: '30';
+                                                    $lesson_minutes = get_post_meta($lesson->ID, '_lesson_duration', true) ?: 0;
                                                     $lesson_duration = intval($lesson_minutes) . ' min';
 
                                                     $type_icons = [
-                                                        'video' => '📹 ' . __('Video', '12gm-lms'),
-                                                        'text' => '📄 ' . __('Text', '12gm-lms'),
-                                                        'quiz' => '❓ ' . __('Quiz', '12gm-lms'),
+                                                        'video' => '🎦 ' . __('Video', '12gm-lms'),
+                                                        'text' => '📄 ' . __('Tekstas', '12gm-lms'),
+                                                        'quiz' => '❓ ' . __('Testas', '12gm-lms'),
                                                         'audio' => '🎵 ' . __('Audio', '12gm-lms')
                                                     ];
                                                     ?>
-                                                    <div class="lesson-type"><?php echo esc_html($type_icons[$lesson_type] ?? '📹 Video'); ?></div>
+                                                    <div class="lesson-type"><?php echo esc_html($type_icons[$lesson_type] ?? ''); ?></div>
                                                     <div class="lesson-duration"><?php echo esc_html($lesson_duration); ?></div>
                                                 </div>
                                             </div>
                                             <div class="lesson-status <?php echo $is_completed ? 'completed' : ($is_current ? 'in-progress' : 'upcoming'); ?>">
                                                 <?php
                                                 if ($is_completed) {
-                                                    echo __('Completed', '12gm-lms');
+                                                    echo __('Užbaigta', '12gm-lms');
                                                 } else {
-                                                    echo __('Upcoming', '12gm-lms');
+                                                    echo __('Dar neperžiūrėta', '12gm-lms');
                                                 }
                                                 ?>
                                             </div>
@@ -231,7 +247,8 @@
         </div>
         <div class="sv-lms-course-navigation">
             <a href="<?php echo esc_url(get_permalink(get_option('12gm_lms_dashboard_page_id'))); ?>" class="sv-lms-back-button">
-                <?php _e('Back to Dashboard', '12gm-lms'); ?>
+                <?php _e(' ↩ Grįžti į mano kursų puslapį', '12gm-lms'); ?>
             </a>
         </div>
     </div>
+</div>

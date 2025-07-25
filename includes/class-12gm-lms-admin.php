@@ -132,6 +132,14 @@ class TwelveGM_LMS_Admin
             'manage_options',
             'post-new.php?post_type=12gm_lesson'
         );
+
+        add_submenu_page(
+            '12gm-lms', // Parent menu slug
+            __('Lesson Groups', '12gm-lms'), // Page title
+            __('Lesson Groups', '12gm-lms'), // Menu title
+            'manage_categories', // Capability required
+            'edit-tags.php?taxonomy=lesson_group&post_type=12gm_lesson' // URL for the taxonomy management page
+        );
     }
 
     /**

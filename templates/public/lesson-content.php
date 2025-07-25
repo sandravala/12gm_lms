@@ -8,7 +8,7 @@
 <div class="sv-lms-lesson-container">
     <div class="sv-lms-lesson-header">
         <div class="sv-lms-lesson-breadcrumbs breadcrumbs">
-            <a href="<?php echo esc_url(get_permalink(get_option('12gm_lms_dashboard_page_id'))); ?>"><?php _e('Dashboard', '12gm-lms'); ?></a>
+            <a href="<?php echo esc_url(get_permalink(get_option('12gm_lms_dashboard_page_id'))); ?>"><?php _e('Mano kursai', '12gm-lms'); ?></a>
             &raquo;
             <a href="<?php echo esc_url(get_permalink($course->ID)); ?>"><?php echo esc_html($course->post_title); ?></a>
             &raquo;
@@ -32,19 +32,19 @@
         <?php if (!$is_completed): ?>
             <div class="sv-lms-lesson-complete-form">
                 <button id="sv-lms-mark-complete-btn" class="button button-primary" data-lesson-id="<?php echo esc_attr($lesson->ID); ?>" data-nonce="<?php echo esc_attr(wp_create_nonce('12gm_lms_lesson_complete')); ?>">
-                    <?php _e('Mark as Complete', '12gm-lms'); ?>
+                    <?php _e('Žymėti kaip baigtą', '12gm-lms'); ?>
                 </button>
                 <span class="sv-lms-spinner" style="display: none;"></span>
                 <span class="sv-lms-complete-success" style="display: none; color: green;">
-                    <span class="dashicons dashicons-yes-alt"></span> <?php _e('Lesson completed', '12gm-lms'); ?>
+                    <span class="dashicons dashicons-yes-alt"></span> <?php _e('Paskaita užbaigta!', '12gm-lms'); ?>
                 </span>
             </div>
         <?php else: ?>
             <div class="sv-lms-lesson-completed-message">
-                <span class="dashicons dashicons-yes-alt"></span> <?php _e('You have completed this lesson', '12gm-lms'); ?>
+                <span class="dashicons dashicons-yes-alt"></span> <?php _e('Sėkmingai įveikei šią temą!', '12gm-lms'); ?>
             </div>
         <?php endif; ?>
-    <div style="background: #f0f0f0; padding: 15px; margin: 20px 0; border: 1px solid #ccc; font-family: monospace; font-size: 12px;">
+    <!-- <div style="background: #f0f0f0; padding: 15px; margin: 20px 0; border: 1px solid #ccc; font-family: monospace; font-size: 12px;">
         <strong>🐛 DEBUG INFO:</strong><br>
         <strong>Current Lesson ID:</strong> <?php echo $lesson->ID; ?><br>
         <strong>Current Position:</strong> <?php echo isset($current_position) ? $current_position : 'NOT SET'; ?><br>
@@ -62,19 +62,19 @@
                 <?php echo ($i + 1) . '. ID:' . $cl->ID . ' - ' . esc_html($cl->post_title) . ' (menu_order: ' . $cl->menu_order . ')' . $current_marker; ?><br>
             <?php endforeach; ?>
         <?php endif; ?>
-    </div>
+    </div> -->
 
         
         <div class="sv-lms-lesson-navigation">
             <?php if ($prev_lesson): ?>
                 <a href="<?php echo esc_url(get_permalink($prev_lesson->ID)); ?>" class="button sv-lms-prev-lesson-button">
                     <span class="dashicons dashicons-arrow-left-alt"></span>
-                    <?php _e('Previous Lesson', '12gm-lms'); ?>
+                    <?php _e('Ankstesnė paskaita', '12gm-lms'); ?>
                 </a>
             <?php endif; ?>
             
             <a href="<?php echo esc_url(get_permalink($course->ID)); ?>" class="button sv-lms-course-button">
-                <?php _e('Back to Course', '12gm-lms'); ?>
+                <?php _e('Atgal į kursą', '12gm-lms'); ?>
             </a>
             
 <?php if ($next_lesson): ?>
@@ -82,9 +82,9 @@
        class="button sv-lms-next-lesson-button <?php echo $is_completed ? '' : 'disabled'; ?>" 
        <?php echo $is_completed ? '' : 'onclick="return false;"'; ?>>
         <?php if (!empty($next_group_name)): ?>
-            <?php _e('Next Group:', '12gm-lms'); ?> <?php echo esc_html($next_group_name); ?>
+            <?php _e('Kitas skyrius: ', '12gm-lms'); ?> <?php echo esc_html($next_group_name); ?>
         <?php else: ?>
-            <?php _e('Next Lesson', '12gm-lms'); ?>
+            <?php _e('Kita paskaita: ', '12gm-lms'); ?>
         <?php endif; ?>
         <span class="dashicons dashicons-arrow-right-alt"></span>
     </a>

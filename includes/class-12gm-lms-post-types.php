@@ -18,7 +18,9 @@ class TwelveGM_LMS_Post_Types
         add_action('init', array($this, 'register_course_post_type'));
         add_action('init', array($this, 'register_lesson_post_type'));
         add_action('init', array($this, 'register_progress_post_type'));
-
+        add_action('init', array($this, 'register_lesson_group_taxonomy'));
+        add_filter('post_row_actions', array($this, 'add_duplicate_link'), 10, 2);
+        add_action('admin_action_duplicate_lesson', array($this, 'handle_duplicate_action'));
         // Make sure to flush rewrite rules when needed
         add_action('init', array($this, 'maybe_flush_rewrite_rules'));
     }
@@ -174,7 +176,7 @@ class TwelveGM_LMS_Post_Types
             'labels'            => $taxonomy_labels,
             'hierarchical'      => true,
             'public'            => true,
-            'show_ui'           => true,
+            'show_ui'           => false,
             'show_admin_column' => true,
             'show_in_nav_menus' => true,
             'show_tagcloud'     => false,
@@ -265,6 +267,125 @@ class TwelveGM_LMS_Post_Types
         );
 
         register_post_type('12gm_progress', $args);
+    }
+
+    /**
+     * Register the Lesson Group taxonomy.
+     *
+     * @since 1.0.0
+     */
+    public function register_lesson_group_taxonomy()
+    {
+        $taxonomy_labels = array(
+            'name'              => _x('Lesson Groups', 'taxonomy general name', '12gm-lms'),
+            'singular_name'     => _x('Lesson Group', 'taxonomy singular name', '12gm-lms'),
+            'search_items'      => __('Search Lesson Groups', '12gm-lms'),
+            'all_items'         => __('All Lesson Groups', '12gm-lms'),
+            'parent_item'       => __('Parent Lesson Group', '12gm-lms'),
+            'parent_item_colon' => __('Parent Lesson Group:', '12gm-lms'),
+            'edit_item'         => __('Edit Lesson Group', '12gm-lms'),
+            'update_item'       => __('Update Lesson Group', '12gm-lms'),
+            'add_new_item'      => __('Add New Lesson Group', '12gm-lms'),
+            'new_item_name'     => __('New Lesson Group Name', '12gm-lms'),
+            'menu_name'         => __('Lesson Groups', '12gm-lms'),
+        );
+
+        $taxonomy_args = array(
+            'labels'            => $taxonomy_labels,
+            'hierarchical'      => true, // Category-like behavior
+            'public'            => true,
+            'show_ui'           => true, // Enables admin interface
+            'show_admin_column' => true, // Adds taxonomy column in post list
+            'show_in_nav_menus' => true,
+            'show_tagcloud'     => false,
+            'show_in_rest'      => true, // Enables Gutenberg editor support
+        );
+
+        register_taxonomy('lesson_group', array('12gm_lesson'), $taxonomy_args);
+    }
+
+    /**
+     * Duplicate a lesson post.
+     *
+     * @param int $lesson_id The ID of the lesson to duplicate.
+     * @return int|WP_Error The ID of the new post or a WP_Error object on failure.
+     */
+    function duplicate_lesson($lesson_id)
+    {
+        // Get the original lesson post
+        $original_post = get_post($lesson_id);
+
+        if (!$original_post || $original_post->post_type !== '12gm_lesson') {
+            return new WP_Error('invalid_post', __('Invalid lesson post.', '12gm-lms'));
+        }
+
+        // Create a new post array
+        $new_post = array(
+            'post_title'   => $original_post->post_title . ' (Copy)',
+            'post_content' => $original_post->post_content,
+            'post_status'  => 'draft',
+            'post_type'    => $original_post->post_type,
+        );
+
+        // Insert the new post
+        $new_post_id = wp_insert_post($new_post);
+
+        if (is_wp_error($new_post_id)) {
+            return $new_post_id;
+        }
+
+        // Copy metadata
+        $meta_data = get_post_meta($lesson_id);
+        foreach ($meta_data as $key => $values) {
+            foreach ($values as $value) {
+                add_post_meta($new_post_id, $key, $value);
+            }
+        }
+
+        // Copy taxonomy terms
+        $taxonomies = get_object_taxonomies($original_post->post_type);
+        foreach ($taxonomies as $taxonomy) {
+            $terms = wp_get_post_terms($lesson_id, $taxonomy, array('fields' => 'ids'));
+            wp_set_post_terms($new_post_id, $terms, $taxonomy);
+        }
+
+        return $new_post_id;
+    }
+
+    /**
+     * Add a "Duplicate" link to the lesson post row actions.
+     *
+     * @param array $actions The existing row actions.
+     * @param WP_Post $post The current post object.
+     * @return array The modified row actions.
+     */
+    public function add_duplicate_link($actions, $post)
+    {
+        if ($post->post_type === '12gm_lesson') {
+            $duplicate_url = admin_url('admin.php?action=duplicate_lesson&post=' . $post->ID);
+            $actions['duplicate'] = '<a href="' . esc_url($duplicate_url) . '">' . __('Duplicate', '12gm-lms') . '</a>';
+        }
+        return $actions;
+    }
+
+    /**
+     * Handle the "Duplicate" action for lessons.
+     */
+    public function handle_duplicate_action()
+    {
+        if (!isset($_GET['post']) || !current_user_can('edit_posts')) {
+            wp_die(__('You do not have permission to duplicate this lesson.', '12gm-lms'));
+        }
+
+        $lesson_id = intval($_GET['post']);
+        $new_post_id = $this->duplicate_lesson($lesson_id);
+
+        if (is_wp_error($new_post_id)) {
+            wp_die($new_post_id->get_error_message());
+        }
+
+        wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
+        exit;
     }
 
     /**
