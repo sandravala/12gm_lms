@@ -92,7 +92,19 @@
                 </div> -->
                     <div class="stat-item">
                         <div class="stat-value"><?php echo esc_attr($progress['percentage']); ?>%</div>
-                        <div class="stat-label"><?php $progress['percentage'] < 50 ? _e('Oho! Jau padarei nemažą progresą', '12gm-lms') : _e('Wow! Tau puikiai sekasi - netoli ir pabaiga!', '12gm-lms'); ?></div>
+                        <div class="stat-label">
+                            <?php 
+                            if ($progress['percentage'] == 0) {
+                                _e('1000 žingsnių kelionė prasideda nuo pirmo žingsnio. Ženk jį dabar!', '12gm-lms');
+                            } elseif ($progress['percentage'] < 26) {
+                                _e('Gera pradžia - pusė darbo! Dabar belieka išlaikyti nuoseklumą ;)', '12gm-lms');
+                            } elseif ($progress['percentage'] < 50) {
+                                _e('Oho! Jau padarei nemažą progresą', '12gm-lms');
+                            } else {
+                                _e('Wow! Tau puikiai sekasi - netoli ir pabaiga!', '12gm-lms');
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
 

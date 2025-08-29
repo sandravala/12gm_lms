@@ -636,7 +636,6 @@ class TwelveGM_LMS_Admin
         // Save the course assignment
         if (isset($_POST['12gm_lms_lesson_course'])) {
             $course_term = sanitize_text_field($_POST['12gm_lms_lesson_course']);
-
             // Get current course assignment
             $current_terms = wp_get_object_terms($post_id, '12gm_course_cat', array('fields' => 'slugs'));
             $current_course = !empty($current_terms) ? $current_terms[0] : '';
@@ -650,7 +649,6 @@ class TwelveGM_LMS_Admin
                     delete_post_meta($post_id, '_12gm_course_id');
                 } else {
                     wp_set_object_terms($post_id, $course_term, '12gm_course_cat');
-
                     // Only set menu order for newly assigned lessons (lessons without existing order)
                     if (empty($current_menu_order) || $current_menu_order == 0) {
                         // Get the last menu order of lessons in this course
@@ -681,10 +679,7 @@ class TwelveGM_LMS_Admin
                         ));
                     } else {
                         // Preserve existing menu order for lessons that already have an order
-                        wp_update_post(array(
-                            'ID' => $post_id,
-                            'menu_order' => $current_menu_order,
-                        ));
+                        // No action needed unless external changes to menu_order are expected.
                     }
                     // Store parent course post ID as meta for pretty permalinks
                     if (strpos($course_term, 'course-') === 0) {
@@ -692,15 +687,7 @@ class TwelveGM_LMS_Admin
                         update_post_meta($post_id, '_12gm_course_id', $course_id);
                     }
                 }
-            } else {
-                // Course assignment didn't change, preserve existing menu order
-                if ($current_menu_order > 0) {
-                    wp_update_post(array(
-                        'ID' => $post_id,
-                        'menu_order' => $current_menu_order,
-                    ));
-                }
-            }
+            } 
         }
     }
 

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: 12GM Learning Management System
  * Description: A simple LMS with WooCommerce integration, student & admin dashboards, and course management
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: 12GM
  * Text Domain: 12gm-lms
  * Requires at least: 5.8
